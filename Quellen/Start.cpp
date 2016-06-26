@@ -15,13 +15,29 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 #include "DlgHaupt.h"
+#include "Parameter.h"
+
 #include <QApplication>
+#include <QtCore>
 
 int main(int anzahlArgumente, char *argumente[])
 {
-	QApplication anwednung(anzahlArgumente, argumente);
+	QApplication Anwednung(anzahlArgumente, argumente);
+
+	QTranslator QtUebersetzung;
+	QTranslator AnwendungUeberstezung;
+
+	QString Uebersetzungspfgad=QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+
+	QtUebersetzung.load(QString("qt_%1").arg(QLocale::system().name()),Uebersetzungspfgad);
+	AnwendungUeberstezung.load(QString("%1_%2").arg(PROGRAMMNAME_KLEIN)
+											   .arg(QLocale::system().name()),Uebersetzungspfgad);
+
+	Anwednung.installTranslator(&QtUebersetzung);
+	Anwednung.installTranslator(&AnwendungUeberstezung);
+
 	DlgHaupt Hauptfenster;
 	Hauptfenster.show();
 
-	return anwednung.exec();
+	return Anwednung.exec();
 }

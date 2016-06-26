@@ -21,6 +21,7 @@ QMAKE_LFLAGS += -fuse-ld=gold
 SOURCES += Quellen/Start.cpp\
 	Quellen/DlgHaupt.cpp
 
-HEADERS  += Quellen/DlgHaupt.h
+HEADERS  += Quellen/DlgHaupt.h \
+    Quellen/Parameter.h
 
 FORMS    += Dialoge/DlgHaupt.ui
