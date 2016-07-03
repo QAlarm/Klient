@@ -8,15 +8,20 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = klient
-TEMPLATE = app
-DESTDIR = bin
-UI_DIR= tmp/ui
-MOC_DIR= tmp/moc
-OBJECTS_DIR= tmp/obj
-RCC_DIR= tmp/rcc
+isEmpty(LOKAL) {
+include(/usr/include/qalarm-lib/Gemeinsam.pri)
+INCLUDEPATH += /usr/include/qalarm-lib
+}
+else {
+include(../Lib/Gemeinsam.pri)
+INCLUDEPATH += ../Lib/Quellen
+LIBS	    += -L../Lib/bin
+}
 
-QMAKE_LFLAGS += -fuse-ld=gold
+
+TARGET = qalarm-klient
+TEMPLATE = app
+
 
 SOURCES += Quellen/Start.cpp\
 	Quellen/DlgHaupt.cpp

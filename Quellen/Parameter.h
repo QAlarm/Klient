@@ -18,5 +18,7 @@
 #define PARAMETER_H
 
 #define PROGRAMMNAME_KLEIN "qalarm_klient"
+#define PROGRAMMNAME		"QAlarm Klient"
+#define VERSION				"0.0.1"
 
 #endif // PARAMETER_H

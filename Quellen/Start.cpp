@@ -22,7 +22,10 @@
 
 int main(int anzahlArgumente, char *argumente[])
 {
-	QApplication Anwednung(anzahlArgumente, argumente);
+	QApplication Anwendung(anzahlArgumente, argumente);
+
+	Anwendung.setApplicationName(PROGRAMMNAME);
+	Anwendung.setApplicationVersion(VERSION);
 
 	QTranslator QtUebersetzung;
 	QTranslator AnwendungUeberstezung;
@@ -33,11 +36,11 @@ int main(int anzahlArgumente, char *argumente[])
 	AnwendungUeberstezung.load(QString("%1_%2").arg(PROGRAMMNAME_KLEIN)
 											   .arg(QLocale::system().name()),Uebersetzungspfgad);
 
-	Anwednung.installTranslator(&QtUebersetzung);
-	Anwednung.installTranslator(&AnwendungUeberstezung);
+	Anwendung.installTranslator(&QtUebersetzung);
+	Anwendung.installTranslator(&AnwendungUeberstezung);
 
 	DlgHaupt Hauptfenster;
 	Hauptfenster.show();
 
-	return Anwednung.exec();
+	return Anwendung.exec();
 }
