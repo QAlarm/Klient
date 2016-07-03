@@ -16,6 +16,7 @@
 */
 #include "DlgHaupt.h"
 #include "Parameter.h"
+#include "qalarmlib_global.h"
 
 #include <QApplication>
 #include <QtCore>
@@ -29,15 +30,19 @@ int main(int anzahlArgumente, char *argumente[])
 
 	QTranslator QtUebersetzung;
 	QTranslator AnwendungUeberstezung;
+	QTranslator	BibliothekUebersetzung;
 
 	QString Uebersetzungspfgad=QLibraryInfo::location(QLibraryInfo::TranslationsPath);
 
 	QtUebersetzung.load(QString("qt_%1").arg(QLocale::system().name()),Uebersetzungspfgad);
 	AnwendungUeberstezung.load(QString("%1_%2").arg(PROGRAMMNAME_KLEIN)
 											   .arg(QLocale::system().name()),Uebersetzungspfgad);
+	BibliothekUebersetzung.load(QString("%1_%2").arg(LIBNAME)
+								.arg(QLocale::system().name()),Uebersetzungspfgad);
 
 	Anwendung.installTranslator(&QtUebersetzung);
 	Anwendung.installTranslator(&AnwendungUeberstezung);
+	Anwendung.installTranslator(&BibliothekUebersetzung);
 
 	DlgHaupt Hauptfenster;
 	Hauptfenster.show();
