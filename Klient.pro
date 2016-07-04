@@ -18,7 +18,6 @@ INCLUDEPATH += ../Lib/Quellen
 LIBS	    += -L../Lib/bin
 }
 
-
 TARGET = qalarm-klient
 TEMPLATE = app
 

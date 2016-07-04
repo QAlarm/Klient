@@ -18,16 +18,26 @@
 #define DLGHAUPT_H
 
 #include "ui_DlgHaupt.h"
+#include <QUrl>
 
 class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 {
-		Q_OBJECT
-
+	Q_OBJECT
 	public:
 		explicit DlgHaupt(QWidget *eltern = 0);
 
+	private Q_SLOTS:
+		void	on_sfEinstellungen_clicked();
+		void	on_bbJaNein_accepted();
+		void	on_bbJaNein_rejected();
+		void	on_txtEndpunkt_editingFinished();
+
+	private:
+		QUrl	K_Endpunkt;
+		bool	K_Fehleingabe;
+
 	protected:
-		void changeEvent(QEvent *e);
+		void	changeEvent(QEvent *e);
 };
 
 #endif // DLGHAUPT_H

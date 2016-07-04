@@ -22,6 +22,7 @@
 DlgHaupt::DlgHaupt(QWidget *eltern) : QMainWindow(eltern)
 {
 	setupUi(this);
+	K_Fehleingabe=false;
 }
 
 void DlgHaupt::changeEvent(QEvent *e)
@@ -34,5 +35,34 @@ void DlgHaupt::changeEvent(QEvent *e)
 			break;
 		default:
 			break;
+	}
+}
+
+void DlgHaupt::on_sfEinstellungen_clicked()
+{
+	Stapel->setCurrentIndex(1);
+}
+
+void DlgHaupt::on_bbJaNein_accepted()
+{
+	if (!K_Fehleingabe)
+		Stapel->setCurrentIndex(0);
+}
+
+void DlgHaupt::on_bbJaNein_rejected()
+{
+	QMainWindow::statusBar()->showMessage(QString());
+	Stapel->setCurrentIndex(0);
+}
+
+void DlgHaupt::on_txtEndpunkt_editingFinished()
+{
+	QUrl URL(txtEndpunkt->text(),QUrl::StrictMode);
+	if (URL.scheme()=="wss")
+		K_Endpunkt=URL;
+	else
+	{
+		K_Fehleingabe=true;
+		QMainWindow::statusBar()->showMessage(tr("Die Endpunkt URL ist ungültig."));
 	}
 }
