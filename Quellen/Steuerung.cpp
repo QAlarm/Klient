@@ -14,34 +14,25 @@
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
-#ifndef DLGHAUPT_H
-#define DLGHAUPT_H
+#include "Steuerung.h"
+#include "Konfiguration.h"
 
-#include "ui_DlgHaupt.h"
-#include <QUrl>
-
-class Steuerung;
-class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
+Q_LOGGING_CATEGORY(qalarm_klientSteuerung, "QAlarm Klient.Steuerung")
+Steuerung::Steuerung(QObject *eltern) : QObject(eltern)
 {
-	Q_OBJECT
-	public:
-		explicit DlgHaupt(QWidget *eltern = Q_NULLPTR);
+	K_Konfiguration=new Konfiguration(this);
+	connect(K_Konfiguration,&Konfiguration::Geladen,this,&Steuerung::KonfigGeladen);
+	qCDebug(qalarm_klientSteuerung)<<tr("Steuerung geladen");
+}
 
-	private Q_SLOTS:
-		void		on_sfEinstellungen_clicked();
-		void		on_bbJaNein_accepted();
-		void		on_bbJaNein_rejected();
-		void		on_txtEndpunkt_editingFinished();
-		void		Fehler(const QString &meldung);
-		void		ParameterSetzen();
+void Steuerung::KonfigGeladen()
+{
+	Q_EMIT Geladen();
+}
 
-	private:
-		QUrl		K_Endpunkt;
-		bool		K_Fehleingabe;
-		Steuerung*	K_Steuerung;
-
-	protected:
-		void		changeEvent(QEvent *e);
-};
-
-#endif // DLGHAUPT_H
+QVariant Steuerung::ParameterLaden(const QString &welchen)const
+{
+	if (!K_Konfiguration)
+		return QVariant();
+	return K_Konfiguration->WertHolen(welchen);
+}

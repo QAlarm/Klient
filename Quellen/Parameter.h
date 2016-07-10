@@ -17,8 +17,12 @@
 #ifndef PARAMETER_H
 #define PARAMETER_H
 
-#define PROGRAMMNAME_KLEIN "qalarm_klient"
-#define PROGRAMMNAME		"QAlarm Klient"
-#define VERSION				"0.0.1"
+#define PROGRAMMNAME_KLEIN		"qalarm_klient"
+#define PROGRAMMNAME			"QAlarm Klient"
+#define FIRMA					PROGRAMMNAME
+#define VERSION					"0.0.1"
+
+#define KONFIG_ ANMELDENAME		"Klient/Anmeldung"
+#define KONFIG_PROTOKOLLEBENE	"Klient/Protokollebene"
 
 #endif // PARAMETER_H

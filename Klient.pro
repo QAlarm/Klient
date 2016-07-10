@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui widgets
 
 isEmpty(LOKAL) {
 include(/usr/include/qalarm-lib/Gemeinsam.pri)
@@ -21,11 +19,14 @@ LIBS	    += -L../Lib/bin
 TARGET = qalarm-klient
 TEMPLATE = app
 
+LIBS += -lqalarm
 
 SOURCES += Quellen/Start.cpp\
-	Quellen/DlgHaupt.cpp
+	Quellen/DlgHaupt.cpp \
+    Quellen/Steuerung.cpp
 
 HEADERS  += Quellen/DlgHaupt.h \
-    Quellen/Parameter.h
+    Quellen/Parameter.h \
+    Quellen/Steuerung.h
 
 FORMS    += Dialoge/DlgHaupt.ui

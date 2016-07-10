@@ -15,6 +15,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 #include "DlgHaupt.h"
+#include "Steuerung.h"
+#include "Parameter.h"
 
 #include <QtGui>
 #include <QtWidgets>
@@ -23,6 +25,9 @@ DlgHaupt::DlgHaupt(QWidget *eltern) : QMainWindow(eltern)
 {
 	setupUi(this);
 	K_Fehleingabe=false;
+	K_Steuerung=new Steuerung(this);
+	connect(K_Steuerung,&Steuerung::Fehler,this,&DlgHaupt::Fehler);
+	connect(K_Steuerung,&Steuerung::Geladen,this,&DlgHaupt::ParameterSetzen);
 }
 
 void DlgHaupt::changeEvent(QEvent *e)
@@ -65,4 +70,16 @@ void DlgHaupt::on_txtEndpunkt_editingFinished()
 		K_Fehleingabe=true;
 		QMainWindow::statusBar()->showMessage(tr("Die Endpunkt URL ist ungültig."));
 	}
+}
+
+void DlgHaupt::Fehler(const QString &meldung)
+{
+	//muss noch geändert werden
+	QMessageBox::information(this,"",meldung);
+}
+
+void DlgHaupt::ParameterSetzen()
+{
+	QMessageBox::information(this,"","geladen");
+	txtName->setText(K_Steuerung->ParameterLaden(ANMELDENAME).toString());
 }
