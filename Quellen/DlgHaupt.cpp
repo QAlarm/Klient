@@ -24,6 +24,8 @@
 DlgHaupt::DlgHaupt(QWidget *eltern) : QMainWindow(eltern)
 {
 	setupUi(this);
+	intProtokoll->setValue(PROTOKOLLEBENE);
+
 	K_Fehleingabe=false;
 	K_Steuerung=new Steuerung(this);
 	connect(K_Steuerung,&Steuerung::Fehler,this,&DlgHaupt::Fehler);
@@ -51,7 +53,11 @@ void DlgHaupt::on_sfEinstellungen_clicked()
 void DlgHaupt::on_bbJaNein_accepted()
 {
 	if (!K_Fehleingabe)
-		Stapel->setCurrentIndex(0);
+	{
+		K_Steuerung->ParameterSpeichern(KONFIG_SERVER,txtEndpunkt->text());
+		K_Steuerung->ParameterSpeichern(KONFIG_PROTOKOLLEBENE,intProtokoll->value());
+	}
+	Stapel->setCurrentIndex(0);
 }
 
 void DlgHaupt::on_bbJaNein_rejected()
@@ -80,6 +86,6 @@ void DlgHaupt::Fehler(const QString &meldung)
 
 void DlgHaupt::ParameterSetzen()
 {
-	QMessageBox::information(this,"","geladen");
-	txtName->setText(K_Steuerung->ParameterLaden(ANMELDENAME).toString());
+	txtEndpunkt->setText(K_Steuerung->ParameterLaden(KONFIG_SERVER,"wss://").toString());
+	intProtokoll->setValue(K_Steuerung->ParameterLaden(KONFIG_PROTOKOLLEBENE,PROTOKOLLEBENE).toInt());
 }

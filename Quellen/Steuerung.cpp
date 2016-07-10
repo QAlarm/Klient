@@ -16,6 +16,8 @@
 */
 #include "Steuerung.h"
 #include "Konfiguration.h"
+#include "Protokollierung.h"
+#include "Parameter.h"
 
 Q_LOGGING_CATEGORY(qalarm_klientSteuerung, "QAlarm Klient.Steuerung")
 Steuerung::Steuerung(QObject *eltern) : QObject(eltern)
@@ -27,12 +29,27 @@ Steuerung::Steuerung(QObject *eltern) : QObject(eltern)
 
 void Steuerung::KonfigGeladen()
 {
+	Protokollierung* Protollebene=new Protokollierung(K_Konfiguration->WertHolen(KONFIG_PROTOKOLLEBENE,PROTOKOLLEBENE).toInt(),
+													  this);
+	Q_UNUSED(Protollebene);
 	Q_EMIT Geladen();
 }
 
 QVariant Steuerung::ParameterLaden(const QString &welchen)const
 {
+	return ParameterLaden(welchen,QVariant());
+}
+
+QVariant Steuerung::ParameterLaden(const QString &welchen, const QVariant &vorgabe) const
+{
 	if (!K_Konfiguration)
 		return QVariant();
-	return K_Konfiguration->WertHolen(welchen);
+	return K_Konfiguration->WertHolen(welchen,vorgabe);
+}
+
+void Steuerung::ParameterSpeichern(const QString &welchen,const QVariant &wert)
+{
+	if (!K_Konfiguration)
+		return;
+	K_Konfiguration->WertSetzen(welchen,wert);
 }

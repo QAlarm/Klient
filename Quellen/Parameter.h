@@ -22,7 +22,10 @@
 #define FIRMA					PROGRAMMNAME
 #define VERSION					"0.0.1"
 
-#define KONFIG_ ANMELDENAME		"Klient/Anmeldung"
+#define KONFIG_ANMELDENAME		"Klient/Anmeldung"
+#define KONFIG_SERVER			"Klient/Server"
 #define KONFIG_PROTOKOLLEBENE	"Klient/Protokollebene"
+
+#define PROTOKOLLEBENE			3
 
 #endif // PARAMETER_H
