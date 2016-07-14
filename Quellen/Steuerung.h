@@ -30,6 +30,7 @@ class Steuerung : public QObject
 		QVariant			ParameterLaden(const QString &welchen)const;
 		QVariant			ParameterLaden(const QString &welchen, const QVariant &vorgabe)const;
 		void				ParameterSpeichern(const QString &welchen,const QVariant &wert);
+		void				ProtokollebeneSetzen(const int &ebene);
 
 	Q_SIGNALS:
 		void				Fehler(const QString& meldung);

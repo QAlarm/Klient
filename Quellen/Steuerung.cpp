@@ -29,9 +29,7 @@ Steuerung::Steuerung(QObject *eltern) : QObject(eltern)
 
 void Steuerung::KonfigGeladen()
 {
-	Protokollierung* Protollebene=new Protokollierung(K_Konfiguration->WertHolen(KONFIG_PROTOKOLLEBENE,PROTOKOLLEBENE).toInt(),
-													  this);
-	Q_UNUSED(Protollebene);
+	ProtokollebeneSetzen(K_Konfiguration->WertHolen(KONFIG_PROTOKOLLEBENE,PROTOKOLLEBENE).toInt());
 	Q_EMIT Geladen();
 }
 
@@ -52,4 +50,10 @@ void Steuerung::ParameterSpeichern(const QString &welchen,const QVariant &wert)
 	if (!K_Konfiguration)
 		return;
 	K_Konfiguration->WertSetzen(welchen,wert);
+}
+
+void Steuerung::ProtokollebeneSetzen(const int &ebene)
+{
+	Protokollierung* Protollebene=new Protokollierung(ebene,this);
+	Q_UNUSED(Protollebene);
 }

@@ -56,6 +56,7 @@ void DlgHaupt::on_bbJaNein_accepted()
 	{
 		K_Steuerung->ParameterSpeichern(KONFIG_SERVER,txtEndpunkt->text());
 		K_Steuerung->ParameterSpeichern(KONFIG_PROTOKOLLEBENE,intProtokoll->value());
+		K_Steuerung->ProtokollebeneSetzen(intProtokoll->value());
 	}
 	Stapel->setCurrentIndex(0);
 }
