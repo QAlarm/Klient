@@ -21,6 +21,7 @@
 #include <QtGui>
 #include <QtWidgets>
 
+Q_LOGGING_CATEGORY(qalarm_klientHaupt, "QAlarm Klient.Hauptdialog")
 DlgHaupt::DlgHaupt(QWidget *eltern) : QMainWindow(eltern)
 {
 	setupUi(this);
@@ -57,14 +58,17 @@ void DlgHaupt::on_bbJaNein_accepted()
 		K_Steuerung->ParameterSpeichern(KONFIG_SERVER,txtEndpunkt->text());
 		K_Steuerung->ParameterSpeichern(KONFIG_PROTOKOLLEBENE,intProtokoll->value());
 		K_Steuerung->ProtokollebeneSetzen(intProtokoll->value());
+		Stapel->setCurrentIndex(0);
 	}
-	Stapel->setCurrentIndex(0);
 }
 
 void DlgHaupt::on_bbJaNein_rejected()
 {
 	QMainWindow::statusBar()->showMessage(QString());
+	ParameterSetzen();
+	K_Fehleingabe=false;
 	Stapel->setCurrentIndex(0);
+
 }
 
 void DlgHaupt::on_txtEndpunkt_editingFinished()
@@ -87,6 +91,32 @@ void DlgHaupt::Fehler(const QString &meldung)
 
 void DlgHaupt::ParameterSetzen()
 {
-	txtEndpunkt->setText(K_Steuerung->ParameterLaden(KONFIG_SERVER,"wss://").toString());
+	QString wss="wss://";
+	txtEndpunkt->setText(K_Steuerung->ParameterLaden(KONFIG_SERVER,wss).toString());
+	if (wss != txtEndpunkt->text())
+		K_Endpunkt=txtEndpunkt->text();
 	intProtokoll->setValue(K_Steuerung->ParameterLaden(KONFIG_PROTOKOLLEBENE,PROTOKOLLEBENE).toInt());
+	txtName->setText(K_Steuerung->ParameterLaden(KONFIG_ANMELDENAME,QString()).toString());
+}
+
+void DlgHaupt::on_txtName_editingFinished()
+{
+	PasswortNamePruefen();
+}
+
+void DlgHaupt::on_txtPasswort_editingFinished()
+{
+	PasswortNamePruefen();
+}
+
+void DlgHaupt::PasswortNamePruefen()
+{
+	if (txtName->text().isEmpty() || txtPasswort->text().isEmpty())
+	{
+		qCDebug(qalarm_klientHaupt)<<tr("Passwort oder Name nicht gesetzt.");
+		return;
+	}
+	K_Steuerung->ParameterSpeichern(KONFIG_ANMELDENAME,txtName->text());
+	if (!K_Endpunkt.isEmpty())
+		sfAnmelden->setEnabled(true);
 }

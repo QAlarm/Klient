@@ -18,9 +18,11 @@
 #define DLGHAUPT_H
 
 #include "ui_DlgHaupt.h"
+#include <QtCore>
 #include <QUrl>
 
 class Steuerung;
+Q_DECLARE_LOGGING_CATEGORY(qalarm_klientHaupt)
 class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 {
 	Q_OBJECT
@@ -32,6 +34,8 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		void		on_bbJaNein_accepted();
 		void		on_bbJaNein_rejected();
 		void		on_txtEndpunkt_editingFinished();
+		void		on_txtName_editingFinished();
+		void		on_txtPasswort_editingFinished();
 		void		Fehler(const QString &meldung);
 		void		ParameterSetzen();
 
@@ -39,6 +43,7 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		QUrl		K_Endpunkt;
 		bool		K_Fehleingabe;
 		Steuerung*	K_Steuerung;
+		void		PasswortNamePruefen();
 
 	protected:
 		void		changeEvent(QEvent *e);
