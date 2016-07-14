@@ -18,11 +18,15 @@
 #include "Konfiguration.h"
 #include "Protokollierung.h"
 #include "Parameter.h"
+#include "Passwortspeicher.h"
 
 Q_LOGGING_CATEGORY(qalarm_klientSteuerung, "QAlarm Klient.Steuerung")
 Steuerung::Steuerung(QObject *eltern) : QObject(eltern)
 {
 	K_Konfiguration=new Konfiguration(this);
+	K_Passwortspeicher=new Passwortspeicher(this);
+	K_KeinPasswort="";
+	K_KeinPWSpeicher=false;
 	connect(K_Konfiguration,&Konfiguration::Geladen,this,&Steuerung::KonfigGeladen);
 	qCDebug(qalarm_klientSteuerung)<<tr("Steuerung geladen");
 }
@@ -56,4 +60,23 @@ void Steuerung::ProtokollebeneSetzen(const int &ebene)
 {
 	Protokollierung* Protollebene=new Protokollierung(ebene,this);
 	Q_UNUSED(Protollebene);
+}
+void Steuerung::PasswortSpeichern(const QString &passwort)
+{
+	if(K_Passwortspeicher)
+		K_Passwortspeicher->PasswortSetzen(passwort);
+}
+
+const QString& Steuerung::PasswortHolen() const
+{
+	if(K_Passwortspeicher)
+		return K_Passwortspeicher->PasswortHolen();
+	return K_KeinPasswort;
+}
+
+const bool& Steuerung::PWSpeicher()const
+{
+	if (!K_Passwortspeicher)
+		return K_KeinPWSpeicher;
+	return K_Passwortspeicher->PWSpeicher();
 }

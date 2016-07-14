@@ -14,19 +14,18 @@
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
-#ifndef PARAMETER_H
-#define PARAMETER_H
+#ifndef PASSWORTSPEICHERGNOME_H
+#define PASSWORTSPEICHERGNOME_H
 
-#define PROGRAMMNAME_KLEIN			"qalarm_klient"
-#define PROGRAMMNAME				"QAlarm Klient"
-#define FIRMA						PROGRAMMNAME
-#define VERSION						"0.0.1"
+#include <QtCore>
 
-#define KONFIG_ANMELDENAME			"Klient/Anmeldung"
-#define KONFIG_SERVER				"Klient/Server"
-#define KONFIG_PROTOKOLLEBENE		"Klient/Protokollebene"
-#define KONFIG_PASSWORTSPEICHERN	"Klient/Passwort Speichern"
+Q_DECLARE_LOGGING_CATEGORY(qalarm_klientPasswortspeicherGnome)
+class PasswortspeicherGnome : public QObject
+{
+	Q_OBJECT
+	public:
+		explicit PasswortspeicherGnome(QObject *eltern = Q_NULLPTR);
 
-#define PROTOKOLLEBENE				3
+};
 
-#endif // PARAMETER_H
+#endif // PASSWORTSPEICHERGNOME_H

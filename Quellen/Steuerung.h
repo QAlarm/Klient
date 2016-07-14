@@ -20,6 +20,7 @@
 #include <QtCore>
 
 class Konfiguration;
+class Passwortspeicher;
 
 Q_DECLARE_LOGGING_CATEGORY(qalarm_klientSteuerung)
 class Steuerung : public QObject
@@ -27,20 +28,26 @@ class Steuerung : public QObject
 		Q_OBJECT
 	public:
 		explicit Steuerung(QObject *eltern = Q_NULLPTR);
-		QVariant			ParameterLaden(const QString &welchen)const;
-		QVariant			ParameterLaden(const QString &welchen, const QVariant &vorgabe)const;
-		void				ParameterSpeichern(const QString &welchen,const QVariant &wert);
-		void				ProtokollebeneSetzen(const int &ebene);
+		QVariant				ParameterLaden(const QString &welchen)const;
+		QVariant				ParameterLaden(const QString &welchen, const QVariant &vorgabe)const;
+		void					ParameterSpeichern(const QString &welchen,const QVariant &wert);
+		void					ProtokollebeneSetzen(const int &ebene);
+		void					PasswortSpeichern(const QString &passwort);
+		const QString&			PasswortHolen()const;
+		const bool&				PWSpeicher()const;
 
 	Q_SIGNALS:
-		void				Fehler(const QString& meldung);
-		void				Geladen();
+		void					Fehler(const QString& meldung);
+		void					Geladen();
 
 	private Q_SLOTS:
-		void				KonfigGeladen();
+		void					KonfigGeladen();
 
 	private:
-			Konfiguration*	K_Konfiguration;
+			Konfiguration*		K_Konfiguration;
+			Passwortspeicher*	K_Passwortspeicher;
+			QString				K_KeinPasswort;
+			bool				K_KeinPWSpeicher;
 };
 
 #endif // STEUERUNG_H

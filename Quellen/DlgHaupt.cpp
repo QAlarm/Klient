@@ -26,7 +26,6 @@ DlgHaupt::DlgHaupt(QWidget *eltern) : QMainWindow(eltern)
 {
 	setupUi(this);
 	intProtokoll->setValue(PROTOKOLLEBENE);
-
 	K_Fehleingabe=false;
 	K_Steuerung=new Steuerung(this);
 	connect(K_Steuerung,&Steuerung::Fehler,this,&DlgHaupt::Fehler);
@@ -53,10 +52,13 @@ void DlgHaupt::on_sfEinstellungen_clicked()
 
 void DlgHaupt::on_bbJaNein_accepted()
 {
+	static uint PW_Speichern=(cbPasswortSpeichern->checkState() == Qt::Checked ? 1 : 0 );
 	if (!K_Fehleingabe)
 	{
 		K_Steuerung->ParameterSpeichern(KONFIG_SERVER,txtEndpunkt->text());
 		K_Steuerung->ParameterSpeichern(KONFIG_PROTOKOLLEBENE,intProtokoll->value());
+		if (K_Steuerung->PWSpeicher())
+			K_Steuerung->ParameterSpeichern(KONFIG_PASSWORTSPEICHERN,PW_Speichern);
 		K_Steuerung->ProtokollebeneSetzen(intProtokoll->value());
 		Stapel->setCurrentIndex(0);
 	}
@@ -68,7 +70,6 @@ void DlgHaupt::on_bbJaNein_rejected()
 	ParameterSetzen();
 	K_Fehleingabe=false;
 	Stapel->setCurrentIndex(0);
-
 }
 
 void DlgHaupt::on_txtEndpunkt_editingFinished()
@@ -97,6 +98,16 @@ void DlgHaupt::ParameterSetzen()
 		K_Endpunkt=txtEndpunkt->text();
 	intProtokoll->setValue(K_Steuerung->ParameterLaden(KONFIG_PROTOKOLLEBENE,PROTOKOLLEBENE).toInt());
 	txtName->setText(K_Steuerung->ParameterLaden(KONFIG_ANMELDENAME,QString()).toString());
+	if (K_Steuerung->PWSpeicher())
+	{
+		Qt::CheckState PW_Speichern=(K_Steuerung->ParameterLaden(KONFIG_PASSWORTSPEICHERN,0).toUInt() == 0 ?  Qt::Unchecked : Qt::Checked);
+		cbPasswortSpeichern->setEnabled(true);
+		cbPasswortSpeichern->setCheckState(PW_Speichern);
+		if(PW_Speichern == Qt::Checked)
+			txtPasswort->setText(K_Steuerung->PasswortHolen());
+	}
+	else
+		qCDebug(qalarm_klientHaupt)<<tr("Kein Passwortspeicher");
 }
 
 void DlgHaupt::on_txtName_editingFinished()
