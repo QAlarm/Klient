@@ -16,6 +16,8 @@
 */
 #include "PasswortspeicherGnome.h"
 
+#include <gnome-keyring.h>
+
 Q_LOGGING_CATEGORY(qalarm_klientPasswortspeicherGnome, "QAlarm Klient.Passwortspeicher.Gnome")
 PasswortspeicherGnome::PasswortspeicherGnome(QObject *eltern) : QObject(eltern)
 {
