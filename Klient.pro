@@ -20,8 +20,8 @@ contains (GNOME,true) {
 DEFINES += GNOMEPWSPEICHER
 SOURCES += Quellen/PasswortspeicherGnome.cpp
 HEADERS += Quellen/PasswortspeicherGnome.h
-PKGCONFIG += gnome-keyring-1
-CONFIG += link_pkgconfig
+PKGCONFIG += libsecret-1
+CONFIG += link_pkgconfig no_keywords
 }
 
 TARGET = qalarm-klient
