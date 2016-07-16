@@ -58,3 +58,16 @@ const QString& Passwortspeicher::PasswortHolen() const
 		qCDebug(qalarm_klientPasswortspeicher)<<tr("Kein Passwortspeicher verfügbar");
 	return K_KeinPasswort;
 }
+
+void Passwortspeicher::PasswortLoeschen()
+{
+	if(K_PW)
+	{
+		qCDebug(qalarm_klientPasswortspeicher)<<tr("Passwortspeicher: %1").arg(K_PW->metaObject()->className());
+#ifdef GNOMEPWSPEICHER
+		dynamic_cast<PasswortspeicherGnome*>(K_PW)->PasswortLoeschen();
+#endif
+	}
+	else
+		qCDebug(qalarm_klientPasswortspeicher)<<tr("Kein Passwortspeicher verfügbar");
+}

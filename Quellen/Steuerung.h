@@ -33,6 +33,7 @@ class Steuerung : public QObject
 		void					ParameterSpeichern(const QString &welchen,const QVariant &wert);
 		void					ProtokollebeneSetzen(const int &ebene);
 		void					PasswortSpeichern(const QString &passwort);
+		void					PasswortLoeschen();
 		const QString&			PasswortHolen()const;
 		const bool&				PWSpeicher()const;
 

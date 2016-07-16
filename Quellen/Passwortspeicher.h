@@ -26,6 +26,7 @@ class Passwortspeicher : public QObject
 	public:
 		explicit		Passwortspeicher(QObject *eltern = Q_NULLPTR);
 		void			PasswortSetzen(const QString &passwort);
+		void			PasswortLoeschen();
 		const QString&	PasswortHolen() const;
 		const bool&		PWSpeicher()const{return K_PWSpeicher;}
 

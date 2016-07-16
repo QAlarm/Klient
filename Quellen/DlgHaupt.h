@@ -36,6 +36,7 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		void		on_txtEndpunkt_editingFinished();
 		void		on_txtName_editingFinished();
 		void		on_txtPasswort_editingFinished();
+		void		on_sfPasswortLoeschen_clicked();
 		void		Fehler(const QString &meldung);
 		void		ParameterSetzen();
 

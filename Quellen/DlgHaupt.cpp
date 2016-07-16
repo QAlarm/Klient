@@ -105,6 +105,7 @@ void DlgHaupt::ParameterSetzen()
 		cbPasswortSpeichern->setCheckState(PW_Speichern);
 		if(PW_Speichern == Qt::Checked)
 			txtPasswort->setText(K_Steuerung->PasswortHolen());
+		sfPasswortLoeschen->setEnabled(true);
 	}
 	else
 		qCDebug(qalarm_klientHaupt)<<tr("Kein Passwortspeicher");
@@ -132,4 +133,9 @@ void DlgHaupt::PasswortNamePruefen()
 		K_Steuerung->PasswortSpeichern(txtPasswort->text());
 	if (!K_Endpunkt.isEmpty())
 		sfAnmelden->setEnabled(true);
+}
+
+void DlgHaupt::on_sfPasswortLoeschen_clicked()
+{
+	K_Steuerung->PasswortLoeschen();
 }

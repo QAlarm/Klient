@@ -80,3 +80,9 @@ const bool& Steuerung::PWSpeicher()const
 		return K_KeinPWSpeicher;
 	return K_Passwortspeicher->PWSpeicher();
 }
+
+void Steuerung::PasswortLoeschen()
+{
+	if(K_Passwortspeicher)
+		K_Passwortspeicher->PasswortLoeschen();
+}

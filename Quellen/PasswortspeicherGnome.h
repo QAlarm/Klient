@@ -30,6 +30,7 @@ class PasswortspeicherGnome : public QObject
 
 		const QString&	PasswortHolen();
 		void			PasswortSpeichern(const QString &passwort);
+		void			PasswortLoeschen();
 
 	private:
 		QString				K_Passwort;

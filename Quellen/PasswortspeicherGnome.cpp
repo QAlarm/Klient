@@ -33,7 +33,7 @@ PasswortspeicherGnome::~PasswortspeicherGnome()
 const QString& PasswortspeicherGnome::PasswortHolen()
 {
 	GError* Fehler=Q_NULLPTR;
-	gchar *Passwort=secret_password_lookup_sync(K_Schema,NULL,&Fehler,NULL);
+	gchar *Passwort=secret_password_lookup_nonpageable_sync(K_Schema,NULL,&Fehler,NULL);
 	if(Passwort==NULL)
 	{
 		qCInfo(qalarm_klientPasswortspeicherGnome)<<tr("Kein Passwort gefunden.");
@@ -68,4 +68,22 @@ void PasswortspeicherGnome::PasswortSpeichern(const QString &passwort)
 	else
 		qCDebug(qalarm_klientPasswortspeicherGnome)<<tr("Passwort gespeichert");
 	K_Passwort=passwort;
+}
+
+void PasswortspeicherGnome::PasswortLoeschen()
+{
+	K_Passwort.fill('X');
+	GError* Fehler=Q_NULLPTR;
+	bool ok=secret_password_clear_sync(K_Schema,NULL,&Fehler,NULL);
+	if(!ok)
+	{
+		qCWarning(qalarm_klientPasswortspeicherGnome)<<tr("Konnte das Passwort nich löschen.");
+		if(Fehler)
+		{
+			qCWarning(qalarm_klientPasswortspeicherGnome)<<Fehler->message;
+			g_error_free(Fehler);
+		}
+	}
+	else
+		qCDebug(qalarm_klientPasswortspeicherGnome)<<tr("Passwort gelöscht");
 }
