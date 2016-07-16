@@ -18,14 +18,23 @@
 #define PASSWORTSPEICHERGNOME_H
 
 #include <QtCore>
+#include <libsecret/secret.h>
 
 Q_DECLARE_LOGGING_CATEGORY(qalarm_klientPasswortspeicherGnome)
 class PasswortspeicherGnome : public QObject
 {
 	Q_OBJECT
 	public:
-		explicit PasswortspeicherGnome(QObject *eltern = Q_NULLPTR);
+		explicit		PasswortspeicherGnome(QObject *eltern = Q_NULLPTR);
+						~PasswortspeicherGnome();
 
+		const QString&	PasswortHolen();
+		void			PasswortSpeichern(const QString &passwort);
+
+	private:
+		QString				K_Passwort;
+		SecretSchema*		K_Schema;
+		GHashTable*			K_Tabelle;
 };
 
 #endif // PASSWORTSPEICHERGNOME_H

@@ -128,6 +128,8 @@ void DlgHaupt::PasswortNamePruefen()
 		return;
 	}
 	K_Steuerung->ParameterSpeichern(KONFIG_ANMELDENAME,txtName->text());
+	if(cbPasswortSpeichern->checkState() == Qt::Checked)
+		K_Steuerung->PasswortSpeichern(txtPasswort->text());
 	if (!K_Endpunkt.isEmpty())
 		sfAnmelden->setEnabled(true);
 }
