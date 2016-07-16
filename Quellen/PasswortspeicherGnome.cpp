@@ -77,7 +77,7 @@ void PasswortspeicherGnome::PasswortLoeschen()
 	bool ok=secret_password_clear_sync(K_Schema,NULL,&Fehler,NULL);
 	if(!ok)
 	{
-		qCWarning(qalarm_klientPasswortspeicherGnome)<<tr("Konnte das Passwort nich löschen.");
+		qCWarning(qalarm_klientPasswortspeicherGnome)<<tr("Konnte das Passwort nicht löschen.");
 		if(Fehler)
 		{
 			qCWarning(qalarm_klientPasswortspeicherGnome)<<Fehler->message;
