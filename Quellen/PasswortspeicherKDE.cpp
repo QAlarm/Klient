@@ -35,6 +35,12 @@ PasswortspeicherKDE::PasswortspeicherKDE(QObject *eltern) : QObject(eltern)
 	}
 }
 
+PasswortspeicherKDE::~PasswortspeicherKDE()
+{
+	if (K_PWSpeicher!=0)
+		delete K_PWSpeicher;
+}
+
 void PasswortspeicherKDE::PasswortLoeschen()
 {
 	if(!K_gueltig)

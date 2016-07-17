@@ -27,7 +27,7 @@ class Steuerung : public QObject
 {
 		Q_OBJECT
 	public:
-		explicit Steuerung(QObject *eltern = Q_NULLPTR);
+		explicit				Steuerung(QObject *eltern = Q_NULLPTR);
 		QVariant				ParameterLaden(const QString &welchen)const;
 		QVariant				ParameterLaden(const QString &welchen, const QVariant &vorgabe)const;
 		void					ParameterSpeichern(const QString &welchen,const QVariant &wert);

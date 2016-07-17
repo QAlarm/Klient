@@ -30,6 +30,7 @@ class PasswortspeicherKDE : public QObject
 	Q_OBJECT
 	public:
 		explicit			PasswortspeicherKDE(QObject *eltern = Q_NULLPTR);
+							~PasswortspeicherKDE();
 
 		const QString&		PasswortHolen();
 		void				PasswortSpeichern(const QString &passwort);
