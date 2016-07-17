@@ -15,8 +15,13 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 #include "Passwortspeicher.h"
+
 #ifdef GNOMEPWSPEICHER
 #include "PasswortspeicherGnome.h"
+#endif
+
+#ifdef KDEPWSPEICHER
+#include "PasswortspeicherKDE.h"
 #endif
 
 Q_LOGGING_CATEGORY(qalarm_klientPasswortspeicher, "QAlarm Klient.Passwortspeicher")
@@ -25,7 +30,12 @@ Passwortspeicher::Passwortspeicher(QObject *eltern) : QObject(eltern)
 #ifdef GNOMEPWSPEICHER
 	K_PW =new PasswortspeicherGnome(this);
 	K_PWSpeicher=true;
-#else
+#endif
+#ifdef KDEPWSPEICHER
+	K_PW=new PasswortspeicherKDE(this);
+	K_PWSpeicher=true;
+#endif
+#if !defined(GNOMEPWSPEICHER) && !defined(KDEPWSPEICHER)
 	K_PW =Q_NULLPTR;
 	K_PWSpeicher=false;
 #endif
@@ -39,6 +49,9 @@ void Passwortspeicher::PasswortSetzen(const QString &passwort)
 #ifdef GNOMEPWSPEICHER
 		dynamic_cast<PasswortspeicherGnome*>(K_PW)->PasswortSpeichern(passwort);
 #endif
+#ifdef KDEPWSPEICHER
+		dynamic_cast<PasswortspeicherKDE*>(K_PW)->PasswortSpeichern(passwort);
+#endif
 	}
 }
 
@@ -50,6 +63,9 @@ const QString& Passwortspeicher::PasswortHolen() const
 #ifdef GNOMEPWSPEICHER
 		return dynamic_cast<PasswortspeicherGnome*>(K_PW)->PasswortHolen();
 #else
+#ifdef KDEPWSPEICHER
+		return dynamic_cast<PasswortspeicherKDE*>(K_PW)->PasswortHolen();
+#endif
 		return K_KeinPasswort;
 #endif
 
@@ -66,6 +82,9 @@ void Passwortspeicher::PasswortLoeschen()
 		qCDebug(qalarm_klientPasswortspeicher)<<tr("Passwortspeicher: %1").arg(K_PW->metaObject()->className());
 #ifdef GNOMEPWSPEICHER
 		dynamic_cast<PasswortspeicherGnome*>(K_PW)->PasswortLoeschen();
+#endif
+#ifdef KDEPWSPEICHER
+		dynamic_cast<PasswortspeicherKDE*>(K_PW)->PasswortLoeschen();
 #endif
 	}
 	else
