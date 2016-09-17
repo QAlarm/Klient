@@ -19,22 +19,42 @@
 #include "Protokollierung.h"
 #include "Parameter.h"
 #include "Passwortspeicher.h"
+#include "Websocket.h"
+#include "DlgHaupt.h"
+
+#include <QDesktopWidget>
 
 Q_LOGGING_CATEGORY(qalarm_klientSteuerung, "QAlarm Klient.Steuerung")
 Steuerung::Steuerung(QObject *eltern) : QObject(eltern)
 {
 	K_Konfiguration=new Konfiguration(this);
 	K_Passwortspeicher=new Passwortspeicher(this);
+	K_Websocket=new Websocket(this);
 	K_KeinPasswort="";
 	K_KeinPWSpeicher=false;
 	connect(K_Konfiguration,&Konfiguration::Geladen,this,&Steuerung::KonfigGeladen);
+	K_Hauptfenster=new DlgHaupt(this,K_Websocket);
 	qCDebug(qalarm_klientSteuerung)<<tr("Steuerung geladen");
+}
+
+Steuerung::~Steuerung()
+{
+	K_Hauptfenster->deleteLater();
 }
 
 void Steuerung::KonfigGeladen()
 {
 	ProtokollebeneSetzen(K_Konfiguration->WertHolen(KONFIG_PROTOKOLLEBENE,PROTOKOLLEBENE).toInt());
-	Q_EMIT Geladen();
+	K_Hauptfenster->ParameterSetzen();
+	//Ab in die Mitte damit
+	QDesktopWidget *Bildschirm = QApplication::desktop();
+	int BildschirmBeite=Bildschirm->width();
+	int BildschirmHoehe=Bildschirm->height();
+	int x=(BildschirmBeite-K_Hauptfenster->width())/2;
+	int y=(BildschirmHoehe-K_Hauptfenster->height())/2;
+	K_Hauptfenster->move(x,y);
+
+	K_Hauptfenster->show();
 }
 
 QVariant Steuerung::ParameterLaden(const QString &welchen)const

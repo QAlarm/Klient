@@ -15,21 +15,21 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 #include "DlgHaupt.h"
-#include "Steuerung.h"
 #include "Parameter.h"
+#include "Websocket.h"
+#include "Steuerung.h"
 
 #include <QtGui>
 #include <QtWidgets>
 
 Q_LOGGING_CATEGORY(qalarm_klientHaupt, "QAlarm Klient.Hauptdialog")
-DlgHaupt::DlgHaupt(QWidget *eltern) : QMainWindow(eltern)
+DlgHaupt::DlgHaupt(Steuerung *steuerung, Websocket *verbindung, QWidget *eltern) : QMainWindow(eltern)
 {
 	setupUi(this);
 	intProtokoll->setValue(PROTOKOLLEBENE);
 	K_Fehleingabe=false;
-	K_Steuerung=new Steuerung(this);
-	connect(K_Steuerung,&Steuerung::Fehler,this,&DlgHaupt::Fehler);
-	connect(K_Steuerung,&Steuerung::Geladen,this,&DlgHaupt::ParameterSetzen);
+	K_Websocket=verbindung;
+	K_Steuerung=steuerung;
 }
 
 void DlgHaupt::changeEvent(QEvent *e)
@@ -86,7 +86,7 @@ void DlgHaupt::on_txtEndpunkt_editingFinished()
 
 void DlgHaupt::Fehler(const QString &meldung)
 {
-	//muss noch geändert werden
+	//TODO muss noch geändert werden
 	QMessageBox::information(this,"",meldung);
 }
 
@@ -138,4 +138,9 @@ void DlgHaupt::PasswortNamePruefen()
 void DlgHaupt::on_sfPasswortLoeschen_clicked()
 {
 	K_Steuerung->PasswortLoeschen();
+}
+
+void DlgHaupt::on_sfAnmelden_clicked()
+{
+	K_Websocket->open(QUrl(txtEndpunkt->text(),QUrl::StrictMode));
 }

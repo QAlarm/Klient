@@ -43,16 +43,16 @@ TEMPLATE = app
 LIBS += -lqalarm
 
 SOURCES += Quellen/Start.cpp\
-	Quellen/DlgHaupt.cpp \
-    Quellen/Steuerung.cpp \
-    Quellen/Passwortspeicher.cpp
+	   Quellen/DlgHaupt.cpp \
+	   Quellen/Steuerung.cpp \
+	   Quellen/Passwortspeicher.cpp
 
 
 
 HEADERS  += Quellen/DlgHaupt.h \
-    Quellen/Parameter.h \
-    Quellen/Steuerung.h \
-    Quellen/Passwortspeicher.h
+	    Quellen/Parameter.h \
+	    Quellen/Steuerung.h \
+	    Quellen/Passwortspeicher.h
 
 
 

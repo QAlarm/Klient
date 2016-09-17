@@ -22,12 +22,15 @@
 #include <QUrl>
 
 class Steuerung;
+class Websocket;
+
 Q_DECLARE_LOGGING_CATEGORY(qalarm_klientHaupt)
 class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 {
 	Q_OBJECT
 	public:
-		explicit DlgHaupt(QWidget *eltern = Q_NULLPTR);
+		explicit DlgHaupt(Steuerung *steuerung, Websocket *verbindung, QWidget *eltern=Q_NULLPTR);
+		void		ParameterSetzen();
 
 	private Q_SLOTS:
 		void		on_sfEinstellungen_clicked();
@@ -37,13 +40,14 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		void		on_txtName_editingFinished();
 		void		on_txtPasswort_editingFinished();
 		void		on_sfPasswortLoeschen_clicked();
+		void		on_sfAnmelden_clicked();
 		void		Fehler(const QString &meldung);
-		void		ParameterSetzen();
 
 	private:
 		QUrl		K_Endpunkt;
 		bool		K_Fehleingabe;
 		Steuerung*	K_Steuerung;
+		Websocket*	K_Websocket;
 		void		PasswortNamePruefen();
 
 	protected:

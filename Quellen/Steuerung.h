@@ -21,6 +21,8 @@
 
 class Konfiguration;
 class Passwortspeicher;
+class Websocket;
+class DlgHaupt;
 
 Q_DECLARE_LOGGING_CATEGORY(qalarm_klientSteuerung)
 class Steuerung : public QObject
@@ -28,6 +30,7 @@ class Steuerung : public QObject
 		Q_OBJECT
 	public:
 		explicit				Steuerung(QObject *eltern = Q_NULLPTR);
+								~Steuerung();
 		QVariant				ParameterLaden(const QString &welchen)const;
 		QVariant				ParameterLaden(const QString &welchen, const QVariant &vorgabe)const;
 		void					ParameterSpeichern(const QString &welchen,const QVariant &wert);
@@ -49,6 +52,8 @@ class Steuerung : public QObject
 			Passwortspeicher*	K_Passwortspeicher;
 			QString				K_KeinPasswort;
 			bool				K_KeinPWSpeicher;
+			Websocket*			K_Websocket;
+			DlgHaupt*			K_Hauptfenster;
 };
 
 #endif // STEUERUNG_H

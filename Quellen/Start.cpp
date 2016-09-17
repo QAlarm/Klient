@@ -14,7 +14,7 @@
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
-#include "DlgHaupt.h"
+#include "Steuerung.h"
 #include "Parameter.h"
 #include "qalarmlib_global.h"
 
@@ -47,8 +47,7 @@ int main(int anzahlArgumente, char *argumente[])
 	Anwendung.installTranslator(&AnwendungUeberstezung);
 	Anwendung.installTranslator(&BibliothekUebersetzung);
 
-	DlgHaupt Hauptfenster;
-	Hauptfenster.show();
+	Steuerung Ablauf(&Anwendung);
 
 	return Anwendung.exec();
 }
