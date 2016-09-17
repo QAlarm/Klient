@@ -106,6 +106,8 @@ void DlgHaupt::ParameterSetzen()
 		if(PW_Speichern == Qt::Checked)
 			txtPasswort->setText(K_Steuerung->PasswortHolen());
 		sfPasswortLoeschen->setEnabled(true);
+		if(txtEndpunkt->text()!=wss)
+			sfAnmelden->setEnabled(true);
 	}
 	else
 		qCDebug(qalarm_klientHaupt)<<tr("Kein Passwortspeicher");
@@ -113,16 +115,28 @@ void DlgHaupt::ParameterSetzen()
 
 void DlgHaupt::on_txtName_editingFinished()
 {
-	PasswortNamePruefen();
+	static QString alterName;
+	if((alterName.isEmpty()) || (alterName!=txtName->text()))
+	{
+		alterName=txtName->text();
+		PasswortNamePruefen();
+	}
 }
 
 void DlgHaupt::on_txtPasswort_editingFinished()
 {
-	PasswortNamePruefen();
+	//BUG QTBUG-56047
+	static QString altesPasswort;
+	if((altesPasswort.isEmpty()) || (altesPasswort!=txtPasswort->text()))
+	{
+		altesPasswort=txtPasswort->text();
+		PasswortNamePruefen();
+	}
 }
 
 void DlgHaupt::PasswortNamePruefen()
 {
+	//BUG QTBUG-56047
 	if (txtName->text().isEmpty() || txtPasswort->text().isEmpty())
 	{
 		qCDebug(qalarm_klientHaupt)<<tr("Passwort oder Name nicht gesetzt.");
