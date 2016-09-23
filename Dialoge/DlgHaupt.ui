@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="Stapel">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Start">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -95,7 +95,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>253</height>
+            <height>100</height>
            </size>
           </property>
          </spacer>
@@ -220,6 +220,12 @@
           </item>
           <item row="1" column="0">
            <widget class="QSpinBox" name="intProtokoll">
+            <property name="toolTip">
+             <string>1: Kritisch
+2: Warnung
+3: Info
+4: Debug</string>
+            </property>
             <property name="minimum">
              <number>1</number>
             </property>
@@ -268,6 +274,13 @@
          </layout>
         </item>
         <item>
+         <widget class="QCheckBox" name="cbSSLfehlerIgnorieren">
+          <property name="text">
+           <string>SSL Fehler ignorieren</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="verticalSpacer_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -290,6 +303,20 @@
        </layout>
       </widget>
       <widget class="QWidget" name="Wochenabfrage"/>
+      <widget class="QWidget" name="Fehler">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QTextBrowser" name="txtFehler"/>
+        </item>
+        <item>
+         <widget class="QDialogButtonBox" name="bbFehlerOK">
+          <property name="standardButtons">
+           <set>QDialogButtonBox::Ok</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>

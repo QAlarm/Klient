@@ -41,7 +41,9 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		void		on_txtPasswort_editingFinished();
 		void		on_sfPasswortLoeschen_clicked();
 		void		on_sfAnmelden_clicked();
+		void		on_bbFehlerOK_accepted();
 		void		Fehler(const QString &meldung);
+		void		Socketfehler(const QString &meldung);
 
 	private:
 		QUrl		K_Endpunkt;
@@ -49,6 +51,7 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		Steuerung*	K_Steuerung;
 		Websocket*	K_Websocket;
 		void		PasswortNamePruefen();
+		QWidget*	K_LetzteSeite;
 
 	protected:
 		void		changeEvent(QEvent *e);

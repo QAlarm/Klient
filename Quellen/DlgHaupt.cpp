@@ -30,6 +30,7 @@ DlgHaupt::DlgHaupt(Steuerung *steuerung, Websocket *verbindung, QWidget *eltern)
 	K_Fehleingabe=false;
 	K_Websocket=verbindung;
 	K_Steuerung=steuerung;
+	connect(K_Websocket,&Websocket::Fehler,this,&DlgHaupt::Socketfehler);
 }
 
 void DlgHaupt::changeEvent(QEvent *e)
@@ -53,10 +54,12 @@ void DlgHaupt::on_sfEinstellungen_clicked()
 void DlgHaupt::on_bbJaNein_accepted()
 {
 	static uint PW_Speichern=(cbPasswortSpeichern->checkState() == Qt::Checked ? 1 : 0 );
+	static bool SSL_Fehler_ignorieren=cbSSLfehlerIgnorieren->checkState() == Qt::CheckState::Checked ? true : false;
 	if (!K_Fehleingabe)
 	{
 		K_Steuerung->ParameterSpeichern(KONFIG_SERVER,txtEndpunkt->text());
 		K_Steuerung->ParameterSpeichern(KONFIG_PROTOKOLLEBENE,intProtokoll->value());
+		K_Steuerung->ParameterSpeichern(KONFIG_SSLFEHLERIGNORIEREN,SSL_Fehler_ignorieren);
 		if (K_Steuerung->PWSpeicher())
 			K_Steuerung->ParameterSpeichern(KONFIG_PASSWORTSPEICHERN,PW_Speichern);
 		K_Steuerung->ProtokollebeneSetzen(intProtokoll->value());
@@ -86,13 +89,22 @@ void DlgHaupt::on_txtEndpunkt_editingFinished()
 
 void DlgHaupt::Fehler(const QString &meldung)
 {
-	//TODO muss noch geändert werden
-	QMessageBox::information(this,"",meldung);
+	K_LetzteSeite=Stapel->currentWidget();
+	txtFehler->append(meldung);
+	Stapel->setCurrentIndex(3);
+
+}
+
+void DlgHaupt::Socketfehler(const QString &meldung)
+{
+	Fehler(meldung);
+	sfAnmelden->setEnabled(true);
 }
 
 void DlgHaupt::ParameterSetzen()
 {
-	QString wss="wss://";
+	static QString wss="wss://";
+	cbSSLfehlerIgnorieren->setCheckState(K_Steuerung->ParameterLaden(KONFIG_SSLFEHLERIGNORIEREN,false).toBool() == false ? Qt::CheckState::Unchecked : Qt::CheckState::Checked );
 	txtEndpunkt->setText(K_Steuerung->ParameterLaden(KONFIG_SERVER,wss).toString());
 	if (wss != txtEndpunkt->text())
 		K_Endpunkt=txtEndpunkt->text();
@@ -156,5 +168,13 @@ void DlgHaupt::on_sfPasswortLoeschen_clicked()
 
 void DlgHaupt::on_sfAnmelden_clicked()
 {
+	sfAnmelden->setEnabled(false);
+	if (cbSSLfehlerIgnorieren->checkState() == Qt::CheckState::Checked)
+		K_Websocket->ignoreSslErrors();
 	K_Websocket->open(QUrl(txtEndpunkt->text(),QUrl::StrictMode));
+}
+
+void DlgHaupt::on_bbFehlerOK_accepted()
+{
+	Stapel->setCurrentWidget(K_LetzteSeite);
 }
