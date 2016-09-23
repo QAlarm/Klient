@@ -306,6 +306,16 @@
       <widget class="QWidget" name="Fehler">
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Fehler:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QTextBrowser" name="txtFehler"/>
         </item>
         <item>
