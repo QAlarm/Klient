@@ -31,6 +31,7 @@ DlgHaupt::DlgHaupt(Steuerung *steuerung, Websocket *verbindung, QWidget *eltern)
 	K_Websocket=verbindung;
 	K_Steuerung=steuerung;
 	connect(K_Websocket,&Websocket::Fehler,this,&DlgHaupt::Socketfehler);
+	connect(K_Websocket,&Websocket::connected,this,&DlgHaupt::MitServerVerbunden);
 }
 
 void DlgHaupt::changeEvent(QEvent *e)
@@ -170,11 +171,20 @@ void DlgHaupt::on_sfAnmelden_clicked()
 {
 	sfAnmelden->setEnabled(false);
 	if (cbSSLfehlerIgnorieren->checkState() == Qt::CheckState::Checked)
-		K_Websocket->ignoreSslErrors();
+	{
+		QList<QSslError> Fehlerliste;
+		Fehlerliste<<QSslError(QSslError::SelfSignedCertificate)<<QSslError(QSslError::HostNameMismatch);
+		K_Websocket->ignoreSslErrors(Fehlerliste);
+	}
 	K_Websocket->open(QUrl(txtEndpunkt->text(),QUrl::StrictMode));
 }
 
 void DlgHaupt::on_bbFehlerOK_accepted()
 {
 	Stapel->setCurrentWidget(K_LetzteSeite);
+}
+
+void DlgHaupt::MitServerVerbunden()
+{
+	qCDebug(qalarm_klientHaupt)<<tr("Verbindung hergestellt");
 }

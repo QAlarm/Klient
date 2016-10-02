@@ -44,6 +44,7 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		void		on_bbFehlerOK_accepted();
 		void		Fehler(const QString &meldung);
 		void		Socketfehler(const QString &meldung);
+		void		MitServerVerbunden();
 
 	private:
 		QUrl		K_Endpunkt;
