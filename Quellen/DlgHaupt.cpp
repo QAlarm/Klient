@@ -18,6 +18,7 @@
 #include "Parameter.h"
 #include "Websocket.h"
 #include "Steuerung.h"
+#include "TmWochenabfrage.h"
 
 #include <QtGui>
 #include <QtWidgets>
@@ -30,6 +31,7 @@ DlgHaupt::DlgHaupt(Steuerung *steuerung, Websocket *verbindung, QWidget *eltern)
 	K_Fehleingabe=false;
 	K_Websocket=verbindung;
 	K_Steuerung=steuerung;
+	K_TmWochenabfrage=new TmWochenabfrage(this);
 	connect(K_Websocket,&Websocket::Fehler,this,&DlgHaupt::Socketfehler);
 	connect(K_Websocket,&Websocket::connected,this,&DlgHaupt::MitServerVerbunden);
 }
@@ -199,6 +201,8 @@ void DlgHaupt::on_Stapel_currentChanged(int index)
 	{
 		QDate Datum=QDate::currentDate();
 		sb_KW->setMaximum(QDate(Datum.year(),12,31).weekNumber());
-		sb_KW->setValue(Datum.weekNumber());
+		sb_KW->setMinimum(Datum.weekNumber());
+		sb_KW->setValue(sb_KW->minimum());
+		tv_Wochenabfrage->setModel(K_TmWochenabfrage);
 	}
 }

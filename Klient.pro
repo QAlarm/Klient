@@ -45,14 +45,16 @@ LIBS += -lqalarm
 SOURCES += Quellen/Start.cpp\
 	   Quellen/DlgHaupt.cpp \
 	   Quellen/Steuerung.cpp \
-	   Quellen/Passwortspeicher.cpp
+	   Quellen/Passwortspeicher.cpp \
+    Quellen/TmWochenabfrage.cpp
 
 
 
 HEADERS  += Quellen/DlgHaupt.h \
 	    Quellen/Parameter.h \
 	    Quellen/Steuerung.h \
-	    Quellen/Passwortspeicher.h
+	    Quellen/Passwortspeicher.h \
+    Quellen/TmWochenabfrage.h
 
 
 

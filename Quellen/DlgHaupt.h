@@ -23,6 +23,7 @@
 
 class Steuerung;
 class Websocket;
+class TmWochenabfrage;
 
 Q_DECLARE_LOGGING_CATEGORY(qalarm_klientHaupt)
 class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
@@ -30,33 +31,34 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 	Q_OBJECT
 	public:
 		explicit DlgHaupt(Steuerung *steuerung, Websocket *verbindung, QWidget *eltern=Q_NULLPTR);
-		void		ParameterSetzen();
+		void				ParameterSetzen();
 
 	private Q_SLOTS:
-		void		on_sfEinstellungen_clicked();
-		void		on_bbJaNein_accepted();
-		void		on_bbJaNein_rejected();
-		void		on_txtEndpunkt_editingFinished();
-		void		on_txtName_editingFinished();
-		void		on_txtPasswort_editingFinished();
-		void		on_sfPasswortLoeschen_clicked();
-		void		on_sfAnmelden_clicked();
-		void		on_bbFehlerOK_accepted();
-		void		on_Stapel_currentChanged(int index);
-		void		Fehler(const QString &meldung);
-		void		Socketfehler(const QString &meldung);
-		void		MitServerVerbunden();
+		void				on_sfEinstellungen_clicked();
+		void				on_bbJaNein_accepted();
+		void				on_bbJaNein_rejected();
+		void				on_txtEndpunkt_editingFinished();
+		void				on_txtName_editingFinished();
+		void				on_txtPasswort_editingFinished();
+		void				on_sfPasswortLoeschen_clicked();
+		void				on_sfAnmelden_clicked();
+		void				on_bbFehlerOK_accepted();
+		void				on_Stapel_currentChanged(int index);
+		void				Fehler(const QString &meldung);
+		void				Socketfehler(const QString &meldung);
+		void				MitServerVerbunden();
 
 	private:
-		QUrl		K_Endpunkt;
-		bool		K_Fehleingabe;
-		Steuerung*	K_Steuerung;
-		Websocket*	K_Websocket;
-		void		PasswortNamePruefen();
-		QWidget*	K_LetzteSeite;
+		QUrl				K_Endpunkt;
+		bool				K_Fehleingabe;
+		Steuerung*			K_Steuerung;
+		Websocket*			K_Websocket;
+		void				PasswortNamePruefen();
+		QWidget*			K_LetzteSeite;
+		TmWochenabfrage*	K_TmWochenabfrage;
 
 	protected:
-		void		changeEvent(QEvent *e);
+		void				changeEvent(QEvent *e);
 };
 
 #endif // DLGHAUPT_H
