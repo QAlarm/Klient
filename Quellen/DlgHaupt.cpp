@@ -169,6 +169,10 @@ void DlgHaupt::on_sfPasswortLoeschen_clicked()
 
 void DlgHaupt::on_sfAnmelden_clicked()
 {
+	//FIXME Zum Testen
+	Stapel->setCurrentIndex(2);
+	return;
+
 	sfAnmelden->setEnabled(false);
 	if (cbSSLfehlerIgnorieren->checkState() == Qt::CheckState::Checked)
 	{
@@ -187,4 +191,14 @@ void DlgHaupt::on_bbFehlerOK_accepted()
 void DlgHaupt::MitServerVerbunden()
 {
 	qCDebug(qalarm_klientHaupt)<<tr("Verbindung hergestellt");
+}
+
+void DlgHaupt::on_Stapel_currentChanged(int index)
+{
+	if (index==2)
+	{
+		QDate Datum=QDate::currentDate();
+		sb_KW->setMaximum(QDate(Datum.year(),12,31).weekNumber());
+		sb_KW->setValue(Datum.weekNumber());
+	}
 }

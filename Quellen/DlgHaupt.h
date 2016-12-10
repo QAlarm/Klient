@@ -42,6 +42,7 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		void		on_sfPasswortLoeschen_clicked();
 		void		on_sfAnmelden_clicked();
 		void		on_bbFehlerOK_accepted();
+		void		on_Stapel_currentChanged(int index);
 		void		Fehler(const QString &meldung);
 		void		Socketfehler(const QString &meldung);
 		void		MitServerVerbunden();
