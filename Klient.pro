@@ -54,7 +54,8 @@ HEADERS  += Quellen/DlgHaupt.h \
 	    Quellen/Parameter.h \
 	    Quellen/Steuerung.h \
 	    Quellen/Passwortspeicher.h \
-	    Quellen/TmWochenabfrage.h
+	    Quellen/TmWochenabfrage.h \
+    Quellen/Meldungstag.h
 
 
 
