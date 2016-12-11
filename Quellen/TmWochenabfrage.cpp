@@ -21,7 +21,7 @@ QVariant TmWochenabfrage::data(const QModelIndex &index, int rolle) const
 			{
 				case 0:
 					//Datum Spalte
-					Rueckgabe= QDate::currentDate().addDays(index.row()).toString("dd.MM.yyyy");
+					Rueckgabe=K_Bereitschaftsmeldungen.keys()[index.row()].toString("dd.MM.yyyy");
 					break;
 					//Von Spalte
 				case 3:
@@ -36,23 +36,29 @@ QVariant TmWochenabfrage::data(const QModelIndex &index, int rolle) const
 		case Qt::CheckStateRole:
 			if((index.column()==1) || (index.column()==2) || (index.column()==5))
 			{
+				QDate Datum=QDate::fromString(data(this->index(index.row(),0),Qt::DisplayRole).toString(),"dd.MM.yyyy");
 				switch (index.column())
 				{
 					//Dienstbereit
 					case 1:
-						//FIXME zum testen
-						if(index.row()%2)
+						if(K_Bereitschaftsmeldungen[Datum].Dientsbereit())
 							Rueckgabe=Qt::Checked;
 						else
 							Rueckgabe=Qt::Unchecked;
 						break;
 					//Ganztags
 					case 2:
-						//FIXME zum testen
-						if(index.row()%2)
-							Rueckgabe=Qt::Unchecked;
-						else
+						if(K_Bereitschaftsmeldungen[Datum].Ganztags())
 							Rueckgabe=Qt::Checked;
+						else
+							Rueckgabe=Qt::Unchecked;
+						break;
+						//Gehaltsausfall
+					case 5:
+						if(K_Bereitschaftsmeldungen[Datum].Gehaltsausfall())
+							Rueckgabe=Qt::Checked;
+						else
+							Rueckgabe=Qt::Unchecked;
 						break;
 					default:
 						Rueckgabe=Qt::Checked;
@@ -117,6 +123,7 @@ void TmWochenabfrage::KWgeaendert(int kw)
 	Rollen<<Qt::DisplayRole;
 
 	K_KW=kw;
+	DatenInitialisieren();
 	Q_EMIT dataChanged(index(0,0),index(6,5),Rollen);
 }
 
@@ -138,7 +145,7 @@ Qt::ItemFlags TmWochenabfrage::flags(const QModelIndex &index) const
 			else
 				Rueckgabe=Qt::ItemIsUserCheckable|Qt::ItemIsEditable;
 			break;
-		//Von + Bis kann nur geändert werden, wenn Dienstbereit+ Nicht ganztags
+		//Von + Bis kann nur geändert werden, wenn Dienstbereit + nicht ganztags
 		case 3:
 		case 4:
 			if((data(this->index(index.row(),1),Qt::CheckStateRole).toInt()==Qt::Checked) &&
@@ -153,4 +160,15 @@ Qt::ItemFlags TmWochenabfrage::flags(const QModelIndex &index) const
 
 	}
 	return Rueckgabe;
+}
+
+void TmWochenabfrage::DatenInitialisieren()
+{
+	K_Bereitschaftsmeldungen.clear();
+	QDate Start=QDate::currentDate();
+	for(int Tag=0;Tag<7;Tag++)
+	{
+		QDate Neu=Start.addDays(Tag);
+		K_Bereitschaftsmeldungen.insert(Neu,Meldungstag(Neu));
+	}
 }
