@@ -48,3 +48,8 @@ QVariant TmWochenabfrage::headerData(int auswahl, Qt::Orientation richtung, int 
 	}
 	return Rueckgabe;
 }
+
+void TmWochenabfrage::KWgeaendert(int kw)
+{
+
+}

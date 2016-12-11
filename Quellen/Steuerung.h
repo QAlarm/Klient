@@ -27,7 +27,7 @@ class DlgHaupt;
 Q_DECLARE_LOGGING_CATEGORY(qalarm_klientSteuerung)
 class Steuerung : public QObject
 {
-		Q_OBJECT
+	Q_OBJECT
 	public:
 		explicit				Steuerung(QObject *eltern = Q_NULLPTR);
 								~Steuerung();
