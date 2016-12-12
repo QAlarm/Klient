@@ -53,6 +53,7 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		void				MitServerVerbunden();
 
 	private:
+		Q_DISABLE_COPY(DlgHaupt)
 		QUrl				K_Endpunkt;
 		bool				K_Fehleingabe;
 		Steuerung*			K_Steuerung;

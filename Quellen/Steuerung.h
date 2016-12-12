@@ -48,6 +48,7 @@ class Steuerung : public QObject
 		void					KonfigGeladen();
 
 	private:
+			Q_DISABLE_COPY(Steuerung)
 			Konfiguration*		K_Konfiguration;
 			Passwortspeicher*	K_Passwortspeicher;
 			QString				K_KeinPasswort;

@@ -37,6 +37,7 @@ class PasswortspeicherKDE : public QObject
 		void				PasswortLoeschen();
 
 	private:
+		Q_DISABLE_COPY(PasswortspeicherKDE)
 		KWallet::Wallet*	K_PWSpeicher;
 		bool				K_gueltig;
 		QString				K_KeinPW;

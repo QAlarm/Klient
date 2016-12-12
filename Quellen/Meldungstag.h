@@ -5,9 +5,9 @@
 class Meldungstag
 {
 	public:
-		Meldungstag(){};
-		Meldungstag(const QDate &datum,const QTime &von,const QTime &bis,const bool &bereit,const bool &ganztaegig,const bool &gehaltsausfall);
-		Meldungstag(const QDate &datum);
+		explicit Meldungstag(){};
+		explicit Meldungstag(const QDate &datum,const QTime &von,const QTime &bis,const bool &bereit,const bool &ganztaegig,const bool &gehaltsausfall);
+		explicit Meldungstag(const QDate &datum);
 
 		const bool			&Dientsbereit() const {return  K_Bereit;}
 		const bool			&Ganztags() const {return K_Ganztaegig;}

@@ -33,6 +33,7 @@ class PasswortspeicherGnome : public QObject
 		void			PasswortLoeschen();
 
 	private:
+		Q_DISABLE_COPY(PasswortspeicherGnome)
 		QString				K_Passwort;
 		SecretSchema*		K_Schema;
 		GHashTable*			K_Tabelle;

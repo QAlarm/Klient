@@ -31,6 +31,7 @@ class Passwortspeicher : public QObject
 		const bool&		PWSpeicher()const{return K_PWSpeicher;}
 
 	private:
+		Q_DISABLE_COPY(Passwortspeicher)
 		QObject*		K_PW;
 		QString			K_KeinPasswort;
 		bool			K_PWSpeicher;
