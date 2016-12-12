@@ -27,10 +27,16 @@ class Meldungstag
 		const bool	&Dientsbereit() const {return  K_Bereit;}
 		const bool	&Ganztags() const {return K_Ganztaegig;}
 		const bool	&Gehaltsausfall() const {return K_Gehaltsausfall;}
+		const QDate	&Datum() const {return K_Datum;}
+		const QTime	&Von() const {return K_Von;}
+		const QTime &Bis() const {return K_Bis;}
 
 		void		DienstbereitSetzen(const bool &bereit) {K_Bereit=bereit;}
 		void		GanztaegigSetzen(const bool &ganztags) {K_Ganztaegig=ganztags;}
-		void		Gehaltsausfall(const bool &ausfall) {K_Gehaltsausfall=ausfall;}
+		void		GehaltsausfallSetzen(const bool &ausfall) {K_Gehaltsausfall=ausfall;}
+		void		VonSetzen(const QTime &von) {K_Von=von;}
+		void		BisSetzen(const QTime &bis) {K_Bis=bis;}
+
 	private:
 		QDate		K_Datum;
 		QTime		K_Von;

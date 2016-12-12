@@ -21,41 +21,40 @@ QVariant TmWochenabfrage::data(const QModelIndex &index, int rolle) const
 			{
 				case 0:
 					//Datum Spalte
-					Rueckgabe=K_Bereitschaftsmeldungen.keys()[index.row()].toString("dd.MM.yyyy");
+					Rueckgabe=K_Bereitschaftsmeldungen[index.row()].Datum().toString("dd.MM.yyyy");
 					break;
 					//Von Spalte
 				case 3:
-					Rueckgabe=QTime::currentTime().toString("HH:mm");
+					Rueckgabe=K_Bereitschaftsmeldungen[index.row()].Von();
 					break;
 					//Bis Spalte
 				case 4:
-					Rueckgabe=QTime::currentTime().toString("HH:mm");
+					Rueckgabe=K_Bereitschaftsmeldungen[index.row()].Bis();
 					break;
 			}
 			break;
 		case Qt::CheckStateRole:
 			if((index.column()==1) || (index.column()==2) || (index.column()==5))
 			{
-				QDate Datum=QDate::fromString(data(this->index(index.row(),0),Qt::DisplayRole).toString(),"dd.MM.yyyy");
 				switch (index.column())
 				{
 					//Dienstbereit
 					case 1:
-						if(K_Bereitschaftsmeldungen[Datum].Dientsbereit())
+						if(K_Bereitschaftsmeldungen[index.row()].Dientsbereit())
 							Rueckgabe=Qt::Checked;
 						else
 							Rueckgabe=Qt::Unchecked;
 						break;
 					//Ganztags
 					case 2:
-						if(K_Bereitschaftsmeldungen[Datum].Ganztags())
+						if(K_Bereitschaftsmeldungen[index.row()].Ganztags())
 							Rueckgabe=Qt::Checked;
 						else
 							Rueckgabe=Qt::Unchecked;
 						break;
 						//Gehaltsausfall
 					case 5:
-						if(K_Bereitschaftsmeldungen[Datum].Gehaltsausfall())
+						if(K_Bereitschaftsmeldungen[index.row()].Gehaltsausfall())
 							Rueckgabe=Qt::Checked;
 						else
 							Rueckgabe=Qt::Unchecked;
@@ -169,6 +168,6 @@ void TmWochenabfrage::DatenInitialisieren()
 	for(int Tag=0;Tag<7;Tag++)
 	{
 		QDate Neu=Start.addDays(Tag);
-		K_Bereitschaftsmeldungen.insert(Neu,Meldungstag(Neu));
+		K_Bereitschaftsmeldungen.append(Meldungstag(Neu));
 	}
 }
