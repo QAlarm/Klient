@@ -5,6 +5,7 @@
 
 #include "Meldungstag.h"
 
+Q_DECLARE_LOGGING_CATEGORY(qalarm_klientTmWochenabfrage)
 class TmWochenabfrage : public QAbstractTableModel
 {
 	Q_OBJECT

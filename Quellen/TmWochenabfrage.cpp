@@ -5,7 +5,7 @@
  * Wenn kein Dientsbereit dann ist der Rest egal
  * Wenn gaztags, dann kein Von/Bis
  */
-
+Q_LOGGING_CATEGORY(qalarm_klientTmWochenabfrage, "QAlarm Klient.TmWochenabfrage")
 TmWochenabfrage::TmWochenabfrage(QObject *eltern) : QAbstractTableModel (eltern)
 {
 
