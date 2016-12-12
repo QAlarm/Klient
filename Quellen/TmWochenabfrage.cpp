@@ -184,6 +184,7 @@ void TmWochenabfrage::DatenInitialisieren()
 bool TmWochenabfrage::setData(const QModelIndex &index, const QVariant &wert, int rolle)
 {
 	bool Rueckgabe=false;
+	QTime Zeit;
 	if (index.isValid())
 	{
 		switch (rolle)
@@ -230,8 +231,56 @@ bool TmWochenabfrage::setData(const QModelIndex &index, const QVariant &wert, in
 				{
 					//Von
 					case 3:
+						Zeit=QTime::fromString(wert.toString(),"h:m");
+						if(Zeit.isValid())
+						{
+							if(Zeit!=K_Bereitschaftsmeldungen[index.row()].Von())
+							{
+								if(K_Bereitschaftsmeldungen[index.row()].Bis().isValid())
+								{
+									//Von muss vor Bis liegen
+									if(Zeit<K_Bereitschaftsmeldungen[index.row()].Bis())
+									{
+										K_Bereitschaftsmeldungen[index.row()].VonSetzen(Zeit);
+										Q_EMIT dataChanged(index,index);
+										Rueckgabe=true;
+									}
+								}
+								else
+								{
+									K_Bereitschaftsmeldungen[index.row()].VonSetzen(Zeit);
+									Q_EMIT dataChanged(index,index);
+									Rueckgabe=true;
+								}
+							}
+						}
 						break;
-						qInfo()<<wert;
+					//Bis
+					case 4:
+						Zeit=QTime::fromString(wert.toString(),"h:m");
+						if(Zeit.isValid())
+						{
+							if(Zeit!=K_Bereitschaftsmeldungen[index.row()].Bis())
+							{
+								if(K_Bereitschaftsmeldungen[index.row()].Von().isValid())
+								{
+									//Bis muss nach Vor liegen
+									if(Zeit>K_Bereitschaftsmeldungen[index.row()].Von())
+									{
+										K_Bereitschaftsmeldungen[index.row()].BisSetzen(Zeit);
+										Q_EMIT dataChanged(index,index);
+										Rueckgabe=true;
+									}
+								}
+								else
+								{
+									K_Bereitschaftsmeldungen[index.row()].BisSetzen(Zeit);
+									Q_EMIT dataChanged(index,index);
+									Rueckgabe=true;
+								}
+							}
+						}
+						break;
 					default:
 						Rueckgabe=QAbstractTableModel::setData(index,wert,rolle);
 						break;
