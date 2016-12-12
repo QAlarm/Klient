@@ -207,3 +207,8 @@ void DlgHaupt::on_Stapel_currentChanged(int index)
 		tv_Wochenabfrage->setModel(K_TmWochenabfrage);
 	}
 }
+
+void DlgHaupt::on_sfWochenabfrageSenden_clicked()
+{
+	qCDebug(qalarm_klientHaupt)<<K_TmWochenabfrage->Meldungen();
+}

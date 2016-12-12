@@ -35,14 +35,18 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 
 	private Q_SLOTS:
 		void				on_sfEinstellungen_clicked();
+		void				on_sfWochenabfrageSenden_clicked();
+		void				on_sfPasswortLoeschen_clicked();
+		void				on_sfAnmelden_clicked();
+
 		void				on_bbJaNein_accepted();
 		void				on_bbJaNein_rejected();
+		void				on_bbFehlerOK_accepted();
+
 		void				on_txtEndpunkt_editingFinished();
 		void				on_txtName_editingFinished();
 		void				on_txtPasswort_editingFinished();
-		void				on_sfPasswortLoeschen_clicked();
-		void				on_sfAnmelden_clicked();
-		void				on_bbFehlerOK_accepted();
+
 		void				on_Stapel_currentChanged(int index);
 		void				Fehler(const QString &meldung);
 		void				Socketfehler(const QString &meldung);

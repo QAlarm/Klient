@@ -46,7 +46,8 @@ SOURCES += Quellen/Start.cpp\
 	   Quellen/DlgHaupt.cpp \
 	   Quellen/Steuerung.cpp \
 	   Quellen/Passwortspeicher.cpp \
-	   Quellen/TmWochenabfrage.cpp
+	   Quellen/TmWochenabfrage.cpp \
+    Quellen/Meldungstag.cpp
 
 
 
