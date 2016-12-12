@@ -15,6 +15,7 @@ class TmWochenabfrage : public QAbstractTableModel
 		QVariant			data(const QModelIndex &index, int rolle=Qt::DisplayRole) const Q_DECL_OVERRIDE;
 		QVariant			headerData(int auswahl, Qt::Orientation richtung, int rolle=Qt::DisplayRole) const Q_DECL_OVERRIDE;
 		Qt::ItemFlags		flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
+		bool				setData(const QModelIndex &index, const QVariant &wert, int rolle=Qt::EditRole) Q_DECL_OVERRIDE;
 
 	public Q_SLOTS:
 		void				KWgeaendert(int kw);

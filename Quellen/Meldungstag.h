@@ -24,26 +24,33 @@ class Meldungstag
 			else
 				K_Gehaltsausfall=true;
 		}
-		const bool	&Dientsbereit() const {return  K_Bereit;}
-		const bool	&Ganztags() const {return K_Ganztaegig;}
-		const bool	&Gehaltsausfall() const {return K_Gehaltsausfall;}
-		const QDate	&Datum() const {return K_Datum;}
-		const QTime	&Von() const {return K_Von;}
-		const QTime &Bis() const {return K_Bis;}
+		const bool			&Dientsbereit() const {return  K_Bereit;}
+		const bool			&Ganztags() const {return K_Ganztaegig;}
+		const bool			&Gehaltsausfall() const {return K_Gehaltsausfall;}
+		const QDate			&Datum() const {return K_Datum;}
+		const QTime			&Von() const {return K_Von;}
+		const QTime			&Bis() const {return K_Bis;}
+		const QByteArray	Datensatz(const bool &kompakt=true) const {
+								QJsonDocument Rueckgabe;
+								JsonFormat Format=QJsonDocument::Compact;
+								if(!kompakt)
+									Format=QJsonDocument::Indented;
+								return Rueckgabe.toJson(Format);
+							}
 
-		void		DienstbereitSetzen(const bool &bereit) {K_Bereit=bereit;}
-		void		GanztaegigSetzen(const bool &ganztags) {K_Ganztaegig=ganztags;}
-		void		GehaltsausfallSetzen(const bool &ausfall) {K_Gehaltsausfall=ausfall;}
-		void		VonSetzen(const QTime &von) {K_Von=von;}
-		void		BisSetzen(const QTime &bis) {K_Bis=bis;}
+		void				DienstbereitSetzen(const bool &bereit) {K_Bereit=bereit;}
+		void				GanztaegigSetzen(const bool &ganztags) {K_Ganztaegig=ganztags;}
+		void				GehaltsausfallSetzen(const bool &ausfall) {K_Gehaltsausfall=ausfall;}
+		void				VonSetzen(const QTime &von) {K_Von=von;}
+		void				BisSetzen(const QTime &bis) {K_Bis=bis;}
 
 	private:
-		QDate		K_Datum;
-		QTime		K_Von;
-		QTime		K_Bis;
-		bool		K_Bereit;
-		bool		K_Ganztaegig;
-		bool		K_Gehaltsausfall;
+		QDate				K_Datum;
+		QTime				K_Von;
+		QTime				K_Bis;
+		bool				K_Bereit;
+		bool				K_Ganztaegig;
+		bool				K_Gehaltsausfall;
 };
 
 #endif // MELDUNGSTAG_H

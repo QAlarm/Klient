@@ -134,15 +134,15 @@ Qt::ItemFlags TmWochenabfrage::flags(const QModelIndex &index) const
 	{
 		//Dienstbereit kann immer geändert werden.
 		case 1:
-			Rueckgabe=Qt::ItemIsUserCheckable|Qt::ItemIsEditable|Qt::ItemIsEnabled;
+			Rueckgabe=Qt::ItemIsUserCheckable|Qt::ItemIsEnabled;
 			break;
 		//Ganztags+Verdienstausfall kann nur geändert werden, wenn Dienstbereit
 		case 2:
 		case 5:
 			if(data(this->index(index.row(),1),Qt::CheckStateRole).toInt()==Qt::Checked)
-				Rueckgabe=Qt::ItemIsUserCheckable|Qt::ItemIsEditable|Qt::ItemIsEnabled;
+				Rueckgabe=Qt::ItemIsUserCheckable|Qt::ItemIsEnabled;
 			else
-				Rueckgabe=Qt::ItemIsUserCheckable|Qt::ItemIsEditable;
+				Rueckgabe=Qt::ItemIsUserCheckable;
 			break;
 		//Von + Bis kann nur geändert werden, wenn Dienstbereit + nicht ganztags
 		case 3:
@@ -170,4 +170,52 @@ void TmWochenabfrage::DatenInitialisieren()
 		QDate Neu=Start.addDays(Tag);
 		K_Bereitschaftsmeldungen.append(Meldungstag(Neu));
 	}
+}
+
+bool TmWochenabfrage::setData(const QModelIndex &index, const QVariant &wert, int rolle)
+{
+	bool Rueckgabe=false;
+	if (index.isValid())
+	{
+		if (rolle==Qt::CheckStateRole)
+		{
+			switch(index.column())
+			{
+				//Bereit
+				case 1:
+					if (wert.toBool() != K_Bereitschaftsmeldungen[index.row()].Dientsbereit())
+					{
+						K_Bereitschaftsmeldungen[index.row()].DienstbereitSetzen(wert.toBool());
+						//Es kann sich denn die ganze Spalte geändert haben.
+						Q_EMIT dataChanged(index,this->index(index.row(),5));
+						Rueckgabe=true;
+					}
+					break;
+				//Ganztags
+				case 2:
+					if(wert.toBool() != K_Bereitschaftsmeldungen[index.row()].Ganztags())
+					{
+						K_Bereitschaftsmeldungen[index.row()].GanztaegigSetzen(wert.toBool());
+						//Es können sich denn auch die von/bis Felder ändern
+						Q_EMIT dataChanged(index,this->index(index.row(),4));
+						Rueckgabe=true;
+					}
+					break;
+				//Verdienstausfall
+				case 5:
+					if (wert.toBool() != K_Bereitschaftsmeldungen[index.row()].Gehaltsausfall())
+					{
+						K_Bereitschaftsmeldungen[index.row()].GehaltsausfallSetzen(wert.toBool());
+						Q_EMIT dataChanged(index,index);
+						Rueckgabe=true;
+					}
+					break;
+				default:
+					Rueckgabe=QAbstractTableModel::setData(index,wert,rolle);
+					break;
+			}
+			return Rueckgabe;
+		}
+	}
+	return QAbstractTableModel::setData(index,wert,rolle);
 }
