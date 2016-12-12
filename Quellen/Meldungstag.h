@@ -32,7 +32,7 @@ class Meldungstag
 		const QTime			&Bis() const {return K_Bis;}
 		const QByteArray	Datensatz(const bool &kompakt=true) const {
 								QJsonDocument Rueckgabe;
-								JsonFormat Format=QJsonDocument::Compact;
+								QJsonDocument::JsonFormat Format=QJsonDocument::Compact;
 								if(!kompakt)
 									Format=QJsonDocument::Indented;
 								return Rueckgabe.toJson(Format);

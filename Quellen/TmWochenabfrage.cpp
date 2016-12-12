@@ -14,6 +14,7 @@ TmWochenabfrage::TmWochenabfrage(QObject *eltern) : QAbstractTableModel (eltern)
 QVariant TmWochenabfrage::data(const QModelIndex &index, int rolle) const
 {
 	QVariant Rueckgabe;
+	QTime Zeit;
 	switch(rolle)
 	{
 		case Qt::DisplayRole:
@@ -25,11 +26,19 @@ QVariant TmWochenabfrage::data(const QModelIndex &index, int rolle) const
 					break;
 					//Von Spalte
 				case 3:
-					Rueckgabe=K_Bereitschaftsmeldungen[index.row()].Von();
+					Zeit=K_Bereitschaftsmeldungen[index.row()].Von();
+					if (Zeit.isValid())
+						Rueckgabe=Zeit.toString("hh:mm");
+					else
+						Rueckgabe=tr("ungültig");
 					break;
 					//Bis Spalte
 				case 4:
-					Rueckgabe=K_Bereitschaftsmeldungen[index.row()].Bis();
+					Zeit=K_Bereitschaftsmeldungen[index.row()].Bis();
+					if (Zeit.isValid())
+						Rueckgabe=Zeit.toString("hh:mm");
+					else
+						Rueckgabe=tr("ungültig");
 					break;
 			}
 			break;
@@ -177,45 +186,62 @@ bool TmWochenabfrage::setData(const QModelIndex &index, const QVariant &wert, in
 	bool Rueckgabe=false;
 	if (index.isValid())
 	{
-		if (rolle==Qt::CheckStateRole)
+		switch (rolle)
 		{
-			switch(index.column())
-			{
-				//Bereit
-				case 1:
-					if (wert.toBool() != K_Bereitschaftsmeldungen[index.row()].Dientsbereit())
-					{
-						K_Bereitschaftsmeldungen[index.row()].DienstbereitSetzen(wert.toBool());
-						//Es kann sich denn die ganze Spalte geändert haben.
-						Q_EMIT dataChanged(index,this->index(index.row(),5));
-						Rueckgabe=true;
-					}
-					break;
-				//Ganztags
-				case 2:
-					if(wert.toBool() != K_Bereitschaftsmeldungen[index.row()].Ganztags())
-					{
-						K_Bereitschaftsmeldungen[index.row()].GanztaegigSetzen(wert.toBool());
-						//Es können sich denn auch die von/bis Felder ändern
-						Q_EMIT dataChanged(index,this->index(index.row(),4));
-						Rueckgabe=true;
-					}
-					break;
-				//Verdienstausfall
-				case 5:
-					if (wert.toBool() != K_Bereitschaftsmeldungen[index.row()].Gehaltsausfall())
-					{
-						K_Bereitschaftsmeldungen[index.row()].GehaltsausfallSetzen(wert.toBool());
-						Q_EMIT dataChanged(index,index);
-						Rueckgabe=true;
-					}
-					break;
-				default:
-					Rueckgabe=QAbstractTableModel::setData(index,wert,rolle);
-					break;
-			}
-			return Rueckgabe;
+			case Qt::CheckStateRole:
+				switch(index.column())
+				{
+					//Bereit
+					case 1:
+						if (wert.toBool() != K_Bereitschaftsmeldungen[index.row()].Dientsbereit())
+						{
+							K_Bereitschaftsmeldungen[index.row()].DienstbereitSetzen(wert.toBool());
+							//Es kann sich denn die ganze Spalte geändert haben.
+							Q_EMIT dataChanged(index,this->index(index.row(),5));
+							Rueckgabe=true;
+						}
+						break;
+					//Ganztags
+					case 2:
+						if(wert.toBool() != K_Bereitschaftsmeldungen[index.row()].Ganztags())
+						{
+							K_Bereitschaftsmeldungen[index.row()].GanztaegigSetzen(wert.toBool());
+							//Es können sich denn auch die von/bis Felder ändern
+							Q_EMIT dataChanged(index,this->index(index.row(),4));
+							Rueckgabe=true;
+						}
+						break;
+					//Verdienstausfall
+					case 5:
+						if (wert.toBool() != K_Bereitschaftsmeldungen[index.row()].Gehaltsausfall())
+						{
+							K_Bereitschaftsmeldungen[index.row()].GehaltsausfallSetzen(wert.toBool());
+							Q_EMIT dataChanged(index,index);
+							Rueckgabe=true;
+						}
+						break;
+					default:
+						Rueckgabe=QAbstractTableModel::setData(index,wert,rolle);
+						break;
+				}
+			break;
+			case Qt::EditRole:
+				switch (index.column())
+				{
+					//Von
+					case 3:
+						break;
+						qInfo()<<wert;
+					default:
+						Rueckgabe=QAbstractTableModel::setData(index,wert,rolle);
+						break;
+				}
+				break;
+			default:
+				Rueckgabe=QAbstractTableModel::setData(index,wert,rolle);
+				break;
 		}
+		return Rueckgabe;
 	}
 	return QAbstractTableModel::setData(index,wert,rolle);
 }
