@@ -20,25 +20,21 @@ Meldungstag::Meldungstag(const QDate &datum)
 		K_Gehaltsausfall=true;
 }
 
-const QByteArray Meldungstag::Datensatz(const bool &kompakt) const
+const QJsonObject Meldungstag::Datensatz() const
 {
-	QJsonDocument Rueckgabe;
-	QJsonDocument::JsonFormat Format=QJsonDocument::Compact;
-	if(!kompakt)
-		Format=QJsonDocument::Indented;
-	QJsonObject Objekt;
-	Objekt["date"]=K_Datum.toString(Qt::ISODate);
-	Objekt["full Day"]=K_Ganztaegig;
-	Objekt["salary loss"]=K_Gehaltsausfall;
+	QJsonObject Rueckgabe;
+
+	Rueckgabe["date"]=K_Datum.toString(Qt::ISODate);
+	Rueckgabe["full Day"]=K_Ganztaegig;
+	Rueckgabe["salary loss"]=K_Gehaltsausfall;
 	if(!K_Ganztaegig)
 	{
 		QJsonObject Verfuegbar;
 		Verfuegbar["from"]=K_Von.toString(Qt::ISODate);
 		Verfuegbar["to"]=K_Bis.toString(Qt::ISODate);
-		Objekt["available"]=Verfuegbar;
+		Rueckgabe["available"]=Verfuegbar;
 	}
-	Rueckgabe.setObject(Objekt);
-	return Rueckgabe.toJson(Format);
+	return Rueckgabe;
 }
 
 QDebug operator<<(QDebug dbg, const Meldungstag &tag)

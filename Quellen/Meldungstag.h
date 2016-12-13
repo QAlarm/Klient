@@ -15,7 +15,7 @@ class Meldungstag
 		const QDate			&Datum() const {return K_Datum;}
 		const QTime			&Von() const {return K_Von;}
 		const QTime			&Bis() const {return K_Bis;}
-		const QByteArray	Datensatz(const bool &kompakt=true) const ;
+		const QJsonObject	Datensatz() const ;
 
 		void				DienstbereitSetzen(const bool &bereit) {K_Bereit=bereit;}
 		void				GanztaegigSetzen(const bool &ganztags) {K_Ganztaegig=ganztags;}
