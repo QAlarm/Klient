@@ -202,7 +202,6 @@ void DlgHaupt::on_Stapel_currentChanged(int index)
 	{
 		QDate Datum=QDate::currentDate();
 		sb_KW->setMaximum(QDate(Datum.year(),12,31).weekNumber());
-		sb_KW->setMinimum(Datum.weekNumber());
 		sb_KW->setValue(sb_KW->minimum()+1);
 		tv_Wochenabfrage->setModel(K_TmWochenabfrage);
 	}
@@ -210,5 +209,6 @@ void DlgHaupt::on_Stapel_currentChanged(int index)
 
 void DlgHaupt::on_sfWochenabfrageSenden_clicked()
 {
+	//FIXME zum Testen
 	qCDebug(qalarm_klientHaupt)<<K_TmWochenabfrage->Meldungen();
 }

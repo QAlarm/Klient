@@ -174,6 +174,19 @@ void TmWochenabfrage::DatenInitialisieren()
 {
 	K_Bereitschaftsmeldungen.clear();
 	QDate Start=QDate::currentDate();
+
+	//TODO Programmieren
+	/*
+	if(K_KW<Start.weekNumber())
+	{
+		//KW liegt im letzten Jahr
+	}
+	else
+	{
+		//KW liegt im aktuellen Jahr
+	}*/
+
+	//FIXME Nur zum Testen vom Code
 	for(int Tag=0;Tag<7;Tag++)
 	{
 		QDate Neu=Start.addDays(Tag);
