@@ -8,7 +8,23 @@
 Q_LOGGING_CATEGORY(qalarm_klientTmWochenabfrage, "QAlarm Klient.TmWochenabfrage")
 TmWochenabfrage::TmWochenabfrage(QObject *eltern) : QAbstractTableModel (eltern)
 {
-
+	//QDate Heute=QDate::currentDate();
+	QDate Heute=QDate(2016,12,26);
+	QDate ersteWoche=QDate(Heute.year(),1,4);
+	int Jahr;
+	Heute.weekNumber(&Jahr);
+	if (Heute.year()>Jahr)
+		ersteWoche=QDate(Heute.year()-1,1,4);
+	K_Wochenliste<<ersteWoche;
+	QDate Woche=ersteWoche;
+	do
+	{
+		Woche=Woche.addDays(8-Woche.dayOfWeek());
+		K_Wochenliste<<Woche;
+	}
+	while(Woche.year()==ersteWoche.year());
+	if (K_Wochenliste.last().year()>ersteWoche.year())
+		K_Wochenliste.removeLast();
 }
 
 QVariant TmWochenabfrage::data(const QModelIndex &index, int rolle) const
@@ -173,20 +189,8 @@ Qt::ItemFlags TmWochenabfrage::flags(const QModelIndex &index) const
 void TmWochenabfrage::DatenInitialisieren()
 {
 	K_Bereitschaftsmeldungen.clear();
-	QDate Start=QDate::currentDate();
+	QDate Start=K_Wochenliste[K_KW-1];
 
-	//TODO Programmieren
-	/*
-	if(K_KW<Start.weekNumber())
-	{
-		//KW liegt im letzten Jahr
-	}
-	else
-	{
-		//KW liegt im aktuellen Jahr
-	}*/
-
-	//FIXME Nur zum Testen vom Code
 	for(int Tag=0;Tag<7;Tag++)
 	{
 		QDate Neu=Start.addDays(Tag);

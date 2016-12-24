@@ -17,7 +17,8 @@ class TmWochenabfrage : public QAbstractTableModel
 		QVariant					headerData(int auswahl, Qt::Orientation richtung, int rolle=Qt::DisplayRole) const Q_DECL_OVERRIDE;
 		Qt::ItemFlags				flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 		bool						setData(const QModelIndex &index, const QVariant &wert, int rolle=Qt::EditRole) Q_DECL_OVERRIDE;
-		const QList<Meldungstag>	&Meldungen() const {return K_Bereitschaftsmeldungen;}
+		const QVector<Meldungstag>	&Meldungen() const {return K_Bereitschaftsmeldungen;}
+		QVector<QDate>				&Wochen() {return K_Wochenliste;}
 
 	public Q_SLOTS:
 		void						KWgeaendert(int kw);
@@ -25,8 +26,9 @@ class TmWochenabfrage : public QAbstractTableModel
 	private:
 		Q_DISABLE_COPY(TmWochenabfrage)
 		int K_KW;
-		QList<Meldungstag>			K_Bereitschaftsmeldungen;
+		QVector<Meldungstag>		K_Bereitschaftsmeldungen;
 		void						DatenInitialisieren();
+		QVector<QDate>				K_Wochenliste;
 };
 
 #endif // TMWOCHENABFRAGE_H

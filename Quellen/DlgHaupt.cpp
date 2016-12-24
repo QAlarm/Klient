@@ -200,9 +200,11 @@ void DlgHaupt::on_Stapel_currentChanged(int index)
 {
 	if (index==2)
 	{
-		QDate Datum=QDate::currentDate();
-		sb_KW->setMaximum(QDate(Datum.year(),12,31).weekNumber());
-		sb_KW->setValue(sb_KW->minimum()+1);
+		//BUG Wenn man in der letzten KW vom Jahr ist, kann man die Nächste nicht ausfüllen.
+		//QDate Datum=QDate::currentDate();
+		QDate Datum=QDate(2016,12,26);
+		sb_KW->setRange(Datum.weekNumber(),K_TmWochenabfrage->Wochen().size());
+		sb_KW->setValue(Datum.weekNumber());
 		tv_Wochenabfrage->setModel(K_TmWochenabfrage);
 	}
 }
