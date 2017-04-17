@@ -28,3 +28,11 @@ QVariant LmFunktionsauswahl::data(const QModelIndex &index, int rolle) const
 	}
 	return Rueckgabe;
 }
+
+void LmFunktionsauswahl::FunktionEinfuegen(const QString &name, const QString &bild)
+{
+	beginInsertRows(index(0,0),0,0);
+	K_Funktionsliste.prepend(QStringList()<<name<<bild);
+	K_AnzahlDerFunktionen++;
+	endInsertRows();
+}

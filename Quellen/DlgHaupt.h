@@ -49,6 +49,7 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		void				on_txtPasswort_editingFinished();
 
 		void				on_Stapel_currentChanged(int index);
+		void				on_lv_Funktionsauswahl_clicked(const QModelIndex &was);
 		void				Fehler(const QString &meldung);
 		void				Socketfehler(const QString &meldung);
 		void				MitServerVerbunden();

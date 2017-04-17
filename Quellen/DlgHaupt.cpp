@@ -177,6 +177,7 @@ void DlgHaupt::on_sfAnmelden_clicked()
 	//Nur wenn die Anmeldung geklappt hat.
 	//Das Nodel darf nur die Optionen enthalten, die der Server anbietet.
 	lv_Funktionsauswahl->setModel(K_LmFunktionsauswahl);
+	K_LmFunktionsauswahl->FunktionEinfuegen(tr("Wocheabfrage"),"Wochenabfrage.png");
 	Stapel->setCurrentIndex(1);
 
 	return;
@@ -216,4 +217,9 @@ void DlgHaupt::on_sfWochenabfrageSenden_clicked()
 	//FIXME zum Testen
 	qCDebug(qalarm_klientHaupt)<<Meldung;
 
+}
+
+void DlgHaupt::on_lv_Funktionsauswahl_clicked(const QModelIndex &was)
+{
+	qCDebug(qalarm_klientHaupt)<<"Es wurde was ausbewählt";
 }

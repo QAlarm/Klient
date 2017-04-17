@@ -11,6 +11,8 @@ class LmFunktionsauswahl : public QAbstractListModel
 		explicit LmFunktionsauswahl(QObject *eltern=Q_NULLPTR);
 		int						rowCount(const QModelIndex &eltern=QModelIndex()) const Q_DECL_OVERRIDE {Q_UNUSED(eltern);return K_AnzahlDerFunktionen;}
 		QVariant				data(const QModelIndex &index, int rolle=Qt::DisplayRole) const Q_DECL_OVERRIDE;
+		void					FunktionEinfuegen(const QString &name, const QString &bild);
+
 	private:
 		static const int		K_Basisfunktionen=3;
 		int						K_AnzahlDerFunktionen;
