@@ -25,7 +25,7 @@ class TmWochenabfrage : public QAbstractTableModel
 
 	private:
 		Q_DISABLE_COPY(TmWochenabfrage)
-		int K_KW;
+		int							K_KW;
 		QVector<Meldungstag>		K_Bereitschaftsmeldungen;
 		void						DatenInitialisieren();
 		QVector<QDate>				K_Wochenliste;
