@@ -274,13 +274,6 @@
          </layout>
         </item>
         <item>
-         <widget class="QCheckBox" name="cbSSLfehlerIgnorieren">
-          <property name="text">
-           <string>SSL Fehler ignorieren</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <spacer name="verticalSpacer_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
