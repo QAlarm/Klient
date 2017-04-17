@@ -27,6 +27,8 @@
 #define KONFIG_PROTOKOLLEBENE		"Klient/Protokollebene"
 #define KONFIG_PASSWORTSPEICHERN	"Klient/Passwort Speichern"
 
+#define KONFIG_BMELD_EMPFAENGER		"Bereitschaftsmeldung/Empfänger"
+
 #define PROTOKOLLEBENE				3
 
 #endif // PARAMETER_H
