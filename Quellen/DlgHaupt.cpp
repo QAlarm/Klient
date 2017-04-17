@@ -174,12 +174,6 @@ void DlgHaupt::on_sfAnmelden_clicked()
 	return;
 
 	sfAnmelden->setEnabled(false);
-	if (cbSSLfehlerIgnorieren->checkState() == Qt::CheckState::Checked)
-	{
-		QList<QSslError> Fehlerliste;
-		Fehlerliste<<QSslError(QSslError::SelfSignedCertificate)<<QSslError(QSslError::HostNameMismatch);
-		K_Websocket->ignoreSslErrors(Fehlerliste);
-	}
 	K_Websocket->open(QUrl(txtEndpunkt->text(),QUrl::StrictMode));
 }
 
