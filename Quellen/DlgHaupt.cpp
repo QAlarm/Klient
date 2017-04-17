@@ -65,7 +65,7 @@ void DlgHaupt::on_bbJaNein_accepted()
 		if (K_Steuerung->PWSpeicher())
 			K_Steuerung->ParameterSpeichern(KONFIG_PASSWORTSPEICHERN,PW_Speichern);
 		K_Steuerung->ProtokollebeneSetzen(intProtokoll->value());
-		K_Steuerung->ParameterSpeichern(KONFIG_BMELD_EMPFAENGER,txtBereitschaftsmeldungEmpfaenger->text());
+		K_Steuerung->ParameterSpeichern(KONFIG_BMELD_EMPFAENGER,txtBereitschaftsmeldungEmpfaenger->text().split(','));
 		Stapel->setCurrentIndex(0);
 	}
 }
@@ -112,7 +112,7 @@ void DlgHaupt::ParameterSetzen()
 		K_Endpunkt=txtEndpunkt->text();
 	intProtokoll->setValue(K_Steuerung->ParameterLaden(KONFIG_PROTOKOLLEBENE,PROTOKOLLEBENE).toInt());
 	txtName->setText(K_Steuerung->ParameterLaden(KONFIG_ANMELDENAME,QString()).toString());
-	txtBereitschaftsmeldungEmpfaenger->setText(K_Steuerung->ParameterLaden(KONFIG_BMELD_EMPFAENGER,QString()).toString());
+	txtBereitschaftsmeldungEmpfaenger->setText(K_Steuerung->ParameterLaden(KONFIG_BMELD_EMPFAENGER,QStringList()).toStringList().join(','));
 	if (K_Steuerung->PWSpeicher())
 	{
 		Qt::CheckState PW_Speichern=(K_Steuerung->ParameterLaden(KONFIG_PASSWORTSPEICHERN,0).toUInt() == 0 ?  Qt::Unchecked : Qt::Checked);

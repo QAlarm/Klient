@@ -302,7 +302,11 @@
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QLineEdit" name="txtBereitschaftsmeldungEmpfaenger"/>
+               <widget class="QLineEdit" name="txtBereitschaftsmeldungEmpfaenger">
+                <property name="toolTip">
+                 <string>Mehrer Empfänger sind durch Komma zu trennen.</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
