@@ -8,8 +8,8 @@
 Q_LOGGING_CATEGORY(qalarm_klientTmWochenabfrage, "QAlarm Klient.TmWochenabfrage")
 TmWochenabfrage::TmWochenabfrage(QObject *eltern) : QAbstractTableModel (eltern)
 {
-	//QDate Heute=QDate::currentDate();
-	QDate Heute=QDate(2016,12,26);
+	QDate Heute=QDate::currentDate();
+	//QDate Heute=QDate(2016,12,26);
 	QDate ersteWoche=QDate(Heute.year(),1,4);
 	int Jahr;
 	Heute.weekNumber(&Jahr);
