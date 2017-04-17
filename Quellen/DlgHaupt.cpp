@@ -19,6 +19,7 @@
 #include "Websocket.h"
 #include "Steuerung.h"
 #include "TmWochenabfrage.h"
+#include "LmFunktionsauswahl.h"
 
 #include <QtGui>
 #include <QtWidgets>
@@ -32,6 +33,7 @@ DlgHaupt::DlgHaupt(Steuerung *steuerung, Websocket *verbindung, QWidget *eltern)
 	K_Websocket=verbindung;
 	K_Steuerung=steuerung;
 	K_TmWochenabfrage=new TmWochenabfrage(this);
+	K_LmFunktionsauswahl=new LmFunktionsauswahl(this);
 	connect(K_Websocket,&Websocket::Fehler,this,&DlgHaupt::Socketfehler);
 	connect(K_Websocket,&Websocket::connected,this,&DlgHaupt::MitServerVerbunden);
 	connect(sb_KW,SIGNAL(valueChanged(int)),K_TmWochenabfrage,SLOT(KWgeaendert(int)));
@@ -52,7 +54,7 @@ void DlgHaupt::changeEvent(QEvent *e)
 
 void DlgHaupt::on_sfEinstellungen_clicked()
 {
-	Stapel->setCurrentIndex(1);
+	Stapel->setCurrentIndex(2);
 }
 
 void DlgHaupt::on_bbJaNein_accepted()
@@ -172,7 +174,11 @@ void DlgHaupt::on_sfPasswortLoeschen_clicked()
 void DlgHaupt::on_sfAnmelden_clicked()
 {
 	//FIXME Zum Testen
-	Stapel->setCurrentIndex(2);
+	//Nur wenn die Anmeldung geklappt hat.
+	//Das Nodel darf nur die Optionen enthalten, die der Server anbietet.
+	lv_Funktionsauswahl->setModel(K_LmFunktionsauswahl);
+	Stapel->setCurrentIndex(1);
+
 	return;
 
 	sfAnmelden->setEnabled(false);

@@ -47,7 +47,8 @@ SOURCES += Quellen/Start.cpp\
 	   Quellen/Steuerung.cpp \
 	   Quellen/Passwortspeicher.cpp \
 	   Quellen/TmWochenabfrage.cpp \
-    Quellen/Meldungstag.cpp
+    Quellen/Meldungstag.cpp \
+    Quellen/LmFunktionsauswahl.cpp
 
 
 
@@ -56,8 +57,12 @@ HEADERS  += Quellen/DlgHaupt.h \
 	    Quellen/Steuerung.h \
 	    Quellen/Passwortspeicher.h \
 	    Quellen/TmWochenabfrage.h \
-    Quellen/Meldungstag.h
+    Quellen/Meldungstag.h \
+    Quellen/LmFunktionsauswahl.h
 
 
 
 FORMS    += Dialoge/DlgHaupt.ui
+
+RESOURCES += \
+    Resourcen.qrc

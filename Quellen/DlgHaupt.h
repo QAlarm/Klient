@@ -24,6 +24,7 @@
 class Steuerung;
 class Websocket;
 class TmWochenabfrage;
+class LmFunktionsauswahl;
 
 Q_DECLARE_LOGGING_CATEGORY(qalarm_klientHaupt)
 class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
@@ -61,6 +62,7 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		void				PasswortNamePruefen();
 		QWidget*			K_LetzteSeite;
 		TmWochenabfrage*	K_TmWochenabfrage;
+		LmFunktionsauswahl*	K_LmFunktionsauswahl;
 
 	protected:
 		void				changeEvent(QEvent *e);
