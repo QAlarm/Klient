@@ -58,12 +58,10 @@ void DlgHaupt::on_sfEinstellungen_clicked()
 void DlgHaupt::on_bbJaNein_accepted()
 {
 	static uint PW_Speichern=(cbPasswortSpeichern->checkState() == Qt::Checked ? 1 : 0 );
-	static bool SSL_Fehler_ignorieren=cbSSLfehlerIgnorieren->checkState() == Qt::CheckState::Checked ? true : false;
 	if (!K_Fehleingabe)
 	{
 		K_Steuerung->ParameterSpeichern(KONFIG_SERVER,txtEndpunkt->text());
 		K_Steuerung->ParameterSpeichern(KONFIG_PROTOKOLLEBENE,intProtokoll->value());
-		K_Steuerung->ParameterSpeichern(KONFIG_SSLFEHLERIGNORIEREN,SSL_Fehler_ignorieren);
 		if (K_Steuerung->PWSpeicher())
 			K_Steuerung->ParameterSpeichern(KONFIG_PASSWORTSPEICHERN,PW_Speichern);
 		K_Steuerung->ProtokollebeneSetzen(intProtokoll->value());
@@ -108,7 +106,6 @@ void DlgHaupt::Socketfehler(const QString &meldung)
 void DlgHaupt::ParameterSetzen()
 {
 	static QString wss="wss://";
-	cbSSLfehlerIgnorieren->setCheckState(K_Steuerung->ParameterLaden(KONFIG_SSLFEHLERIGNORIEREN,false).toBool() == false ? Qt::CheckState::Unchecked : Qt::CheckState::Checked );
 	txtEndpunkt->setText(K_Steuerung->ParameterLaden(KONFIG_SERVER,wss).toString());
 	if (wss != txtEndpunkt->text())
 		K_Endpunkt=txtEndpunkt->text();
