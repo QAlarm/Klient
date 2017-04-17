@@ -34,9 +34,9 @@ class PasswortspeicherGnome : public QObject
 
 	private:
 		Q_DISABLE_COPY(PasswortspeicherGnome)
-		QString				K_Passwort;
-		SecretSchema*		K_Schema;
-		GHashTable*			K_Tabelle;
+		QString			K_Passwort;
+		SecretSchema*	K_Schema;
+		GHashTable*		K_Tabelle;
 };
 
 #endif // PASSWORTSPEICHERGNOME_H
