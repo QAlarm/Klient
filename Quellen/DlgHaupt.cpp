@@ -204,6 +204,10 @@ void DlgHaupt::on_Stapel_currentChanged(int index)
 
 void DlgHaupt::on_sfWochenabfrageSenden_clicked()
 {
+	QJsonObject Meldung;
+	Meldung["recipient"]=QJsonArray::fromStringList(txtBereitschaftsmeldungEmpfaenger->text().split(','));
+	Meldung["data"]=K_TmWochenabfrage->Meldungen();
 	//FIXME zum Testen
-	qCDebug(qalarm_klientHaupt)<<K_TmWochenabfrage->Meldungen();
+	qCDebug(qalarm_klientHaupt)<<Meldung;
+
 }

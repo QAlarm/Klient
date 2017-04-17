@@ -311,3 +311,11 @@ bool TmWochenabfrage::setData(const QModelIndex &index, const QVariant &wert, in
 	}
 	return QAbstractTableModel::setData(index,wert,rolle);
 }
+
+const QJsonArray TmWochenabfrage::Meldungen() const
+{
+	QJsonArray Rueckgabe;
+	for(auto Tag:K_Bereitschaftsmeldungen)
+		Rueckgabe.append(Tag.Datensatz());
+	return Rueckgabe;
+}

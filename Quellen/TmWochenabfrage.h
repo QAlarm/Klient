@@ -11,14 +11,14 @@ class TmWochenabfrage : public QAbstractTableModel
 	Q_OBJECT
 	public:
 		explicit TmWochenabfrage(QObject *eltern=Q_NULLPTR);
-		int							rowCount(const QModelIndex &eltern=QModelIndex()) const Q_DECL_OVERRIDE {Q_UNUSED(eltern);return 7;}
-		int							columnCount(const QModelIndex &eltern=QModelIndex()) const Q_DECL_OVERRIDE {Q_UNUSED(eltern);return 6;}
-		QVariant					data(const QModelIndex &index, int rolle=Qt::DisplayRole) const Q_DECL_OVERRIDE;
-		QVariant					headerData(int auswahl, Qt::Orientation richtung, int rolle=Qt::DisplayRole) const Q_DECL_OVERRIDE;
-		Qt::ItemFlags				flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
-		bool						setData(const QModelIndex &index, const QVariant &wert, int rolle=Qt::EditRole) Q_DECL_OVERRIDE;
-		const QVector<Meldungstag>	&Meldungen() const {return K_Bereitschaftsmeldungen;}
-		QVector<QDate>				&Wochen() {return K_Wochenliste;}
+		int						rowCount(const QModelIndex &eltern=QModelIndex()) const Q_DECL_OVERRIDE {Q_UNUSED(eltern);return 7;}
+		int						columnCount(const QModelIndex &eltern=QModelIndex()) const Q_DECL_OVERRIDE {Q_UNUSED(eltern);return 6;}
+		QVariant				data(const QModelIndex &index, int rolle=Qt::DisplayRole) const Q_DECL_OVERRIDE;
+		QVariant				headerData(int auswahl, Qt::Orientation richtung, int rolle=Qt::DisplayRole) const Q_DECL_OVERRIDE;
+		Qt::ItemFlags			flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
+		bool					setData(const QModelIndex &index, const QVariant &wert, int rolle=Qt::EditRole) Q_DECL_OVERRIDE;
+		const QJsonArray		Meldungen() const;
+		QVector<QDate>			&Wochen() {return K_Wochenliste;}
 
 	public Q_SLOTS:
 		void						KWgeaendert(int kw);
