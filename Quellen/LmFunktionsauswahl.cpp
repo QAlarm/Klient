@@ -6,9 +6,8 @@ Q_LOGGING_CATEGORY(qalarm_klientLmFunktionsauswahl, "QAlarm Klient.LmFunktionsau
 LmFunktionsauswahl::LmFunktionsauswahl(QObject *eltern) : QAbstractListModel (eltern)
 {
 	K_AnzahlDerFunktionen=K_Basisfunktionen;
-	K_Funktionsliste.append(QStringList()<<tr("Abmelden")<<"Abmelden.png");
-	K_Funktionsliste.append(QStringList()<<tr("Einstellungen")<<"Einstellungen.png");
-	K_Funktionsliste.append(QStringList()<<tr("Beenden")<<"Beenden.png");
+	K_Funktionsliste.append(QStringList()<<tr("Abmelden")<<"Abmelden.png"<<"Abmelden");
+	K_Funktionsliste.append(QStringList()<<tr("Beenden")<<"Beenden.png"<<"Beenden");
 }
 
 QVariant LmFunktionsauswahl::data(const QModelIndex &index, int rolle) const
@@ -29,10 +28,10 @@ QVariant LmFunktionsauswahl::data(const QModelIndex &index, int rolle) const
 	return Rueckgabe;
 }
 
-void LmFunktionsauswahl::FunktionEinfuegen(const QString &name, const QString &bild)
+void LmFunktionsauswahl::FunktionEinfuegen(const QString &name, const QString &bild, const QString &einsprung)
 {
 	beginInsertRows(index(0,0),0,0);
-	K_Funktionsliste.prepend(QStringList()<<name<<bild);
+	K_Funktionsliste.prepend(QStringList()<<name<<bild<<einsprung);
 	K_AnzahlDerFunktionen++;
 	endInsertRows();
 }

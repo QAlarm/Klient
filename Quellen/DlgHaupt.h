@@ -53,6 +53,9 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		void				Fehler(const QString &meldung);
 		void				Socketfehler(const QString &meldung);
 		void				MitServerVerbunden();
+		void				Beenden();
+		void				Wochenabfrage();
+		void				Abmelden();
 
 	private:
 		Q_DISABLE_COPY(DlgHaupt)

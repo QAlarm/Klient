@@ -1,4 +1,4 @@
-/*
+﻿/*
 	Copyright (C) 2016 Frank Büttner qalarm@terrortux.de
 
 	This program is free software: you can redistribute it and/or modify
@@ -96,7 +96,7 @@ void DlgHaupt::Fehler(const QString &meldung)
 {
 	K_LetzteSeite=Stapel->currentWidget();
 	txtFehler->append(meldung);
-	Stapel->setCurrentIndex(3);
+	Stapel->setCurrentIndex(4);
 
 }
 
@@ -177,7 +177,7 @@ void DlgHaupt::on_sfAnmelden_clicked()
 	//Nur wenn die Anmeldung geklappt hat.
 	//Das Nodel darf nur die Optionen enthalten, die der Server anbietet.
 	lv_Funktionsauswahl->setModel(K_LmFunktionsauswahl);
-	K_LmFunktionsauswahl->FunktionEinfuegen(tr("Wocheabfrage"),"Wochenabfrage.png");
+	K_LmFunktionsauswahl->FunktionEinfuegen(tr("Wocheabfrage"),"Wochenabfrage.png","Wochenabfrage");
 	Stapel->setCurrentIndex(1);
 
 	return;
@@ -198,11 +198,11 @@ void DlgHaupt::MitServerVerbunden()
 
 void DlgHaupt::on_Stapel_currentChanged(int index)
 {
-	if (index==2)
+	if (index==3)
 	{
 		//BUG Wenn man in der letzten KW vom Jahr ist, kann man die Nächste nicht ausfüllen.
-		//QDate Datum=QDate::currentDate();
-		QDate Datum=QDate(2016,12,26);
+		QDate Datum=QDate::currentDate();
+		//QDate Datum=QDate(2016,12,26);
 		sb_KW->setRange(Datum.weekNumber(),K_TmWochenabfrage->Wochen().size());
 		sb_KW->setValue(Datum.weekNumber());
 		tv_Wochenabfrage->setModel(K_TmWochenabfrage);
@@ -216,10 +216,28 @@ void DlgHaupt::on_sfWochenabfrageSenden_clicked()
 	Meldung["data"]=K_TmWochenabfrage->Meldungen();
 	//FIXME zum Testen
 	qCDebug(qalarm_klientHaupt)<<Meldung;
+	Stapel->setCurrentIndex(1);
 
 }
 
 void DlgHaupt::on_lv_Funktionsauswahl_clicked(const QModelIndex &was)
 {
-	qCDebug(qalarm_klientHaupt)<<"Es wurde was ausbewählt";
+	QMetaObject::invokeMethod(this,K_LmFunktionsauswahl->Einsprung(was).toLatin1().data(),Qt::QueuedConnection);
+}
+
+void DlgHaupt::Beenden()
+{
+	this->close();
+}
+
+void DlgHaupt::Wochenabfrage()
+{
+	Stapel->setCurrentIndex(3);
+}
+
+void DlgHaupt::Abmelden()
+{
+	K_Websocket->close();
+	sfAnmelden->setEnabled(true);
+	Stapel->setCurrentIndex(0);
 }

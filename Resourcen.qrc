@@ -2,7 +2,6 @@
     <qresource prefix="/Bilder">
         <file alias="Abmelden.png">Bilder/Abmelden.png</file>
         <file alias="Beenden.png">Bilder/Beenden.png</file>
-        <file alias="Einstellungen.png">Bilder/Einstellungen.png</file>
         <file alias="Wochenabfrage.png">Bilder/Wochenabfrage.png</file>
     </qresource>
 </RCC>
