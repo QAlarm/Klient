@@ -18,6 +18,7 @@ class LmFunktionsauswahl : public QAbstractListModel
 		static const int		K_Basisfunktionen=2;
 		int						K_AnzahlDerFunktionen;
 		QVector<QStringList>	K_Funktionsliste;
+		QStringList				K_Funktionen;
 };
 
 #endif // LMFUNKTIONSAUSWAHL_H

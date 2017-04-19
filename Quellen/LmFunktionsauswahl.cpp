@@ -6,6 +6,8 @@ Q_LOGGING_CATEGORY(qalarm_klientLmFunktionsauswahl, "QAlarm Klient.LmFunktionsau
 LmFunktionsauswahl::LmFunktionsauswahl(QObject *eltern) : QAbstractListModel (eltern)
 {
 	K_AnzahlDerFunktionen=K_Basisfunktionen;
+	K_Funktionen.append("Abmelden");
+	K_Funktionen.append("Beenden");
 	K_Funktionsliste.append(QStringList()<<tr("Abmelden")<<"Abmelden.png"<<"Abmelden");
 	K_Funktionsliste.append(QStringList()<<tr("Beenden")<<"Beenden.png"<<"Beenden");
 }
@@ -30,6 +32,9 @@ QVariant LmFunktionsauswahl::data(const QModelIndex &index, int rolle) const
 
 void LmFunktionsauswahl::FunktionEinfuegen(const QString &name, const QString &bild, const QString &einsprung)
 {
+	if (K_Funktionen.contains(einsprung))
+			return;
+	K_Funktionen.append(einsprung);
 	beginInsertRows(index(0,0),0,0);
 	K_Funktionsliste.prepend(QStringList()<<name<<bild<<einsprung);
 	K_AnzahlDerFunktionen++;

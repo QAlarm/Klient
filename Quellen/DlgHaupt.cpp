@@ -25,6 +25,14 @@
 #include <QtWidgets>
 
 Q_LOGGING_CATEGORY(qalarm_klientHaupt, "QAlarm Klient.Hauptdialog")
+enum DlgHaupt::Funktionsseite:int
+{
+	Start,
+	Funktionsauswahl,
+	Konfiguration,
+	Wochenabfrageseite,
+	Fehlerseite
+};
 DlgHaupt::DlgHaupt(Steuerung *steuerung, Websocket *verbindung, QWidget *eltern) : QMainWindow(eltern)
 {
 	setupUi(this);
@@ -54,7 +62,7 @@ void DlgHaupt::changeEvent(QEvent *e)
 
 void DlgHaupt::on_sfEinstellungen_clicked()
 {
-	Stapel->setCurrentIndex(2);
+	Stapel->setCurrentIndex(Funktionsseite::Konfiguration);
 }
 
 void DlgHaupt::on_bbJaNein_accepted()
@@ -68,7 +76,7 @@ void DlgHaupt::on_bbJaNein_accepted()
 			K_Steuerung->ParameterSpeichern(KONFIG_PASSWORTSPEICHERN,PW_Speichern);
 		K_Steuerung->ProtokollebeneSetzen(intProtokoll->value());
 		K_Steuerung->ParameterSpeichern(KONFIG_BMELD_EMPFAENGER,txtBereitschaftsmeldungEmpfaenger->text().split(','));
-		Stapel->setCurrentIndex(0);
+		Stapel->setCurrentIndex(Funktionsseite::Start);
 	}
 }
 
@@ -77,7 +85,7 @@ void DlgHaupt::on_bbJaNein_rejected()
 	QMainWindow::statusBar()->showMessage(QString());
 	ParameterSetzen();
 	K_Fehleingabe=false;
-	Stapel->setCurrentIndex(0);
+	Stapel->setCurrentIndex(Funktionsseite::Start);
 }
 
 void DlgHaupt::on_txtEndpunkt_editingFinished()
@@ -96,7 +104,7 @@ void DlgHaupt::Fehler(const QString &meldung)
 {
 	K_LetzteSeite=Stapel->currentWidget();
 	txtFehler->append(meldung);
-	Stapel->setCurrentIndex(4);
+	Stapel->setCurrentIndex(Funktionsseite::Fehlerseite);
 
 }
 
@@ -178,7 +186,7 @@ void DlgHaupt::on_sfAnmelden_clicked()
 	//Das Nodel darf nur die Optionen enthalten, die der Server anbietet.
 	lv_Funktionsauswahl->setModel(K_LmFunktionsauswahl);
 	K_LmFunktionsauswahl->FunktionEinfuegen(tr("Wocheabfrage"),"Wochenabfrage.png","Wochenabfrage");
-	Stapel->setCurrentIndex(1);
+	Stapel->setCurrentIndex(Funktionsseite::Funktionsauswahl);
 
 	return;
 
@@ -198,7 +206,7 @@ void DlgHaupt::MitServerVerbunden()
 
 void DlgHaupt::on_Stapel_currentChanged(int index)
 {
-	if (index==3)
+	if (index==Funktionsseite::Wochenabfrageseite)
 	{
 		//BUG Wenn man in der letzten KW vom Jahr ist, kann man die Nächste nicht ausfüllen.
 		QDate Datum=QDate::currentDate();
@@ -216,7 +224,7 @@ void DlgHaupt::on_sfWochenabfrageSenden_clicked()
 	Meldung["data"]=K_TmWochenabfrage->Meldungen();
 	//FIXME zum Testen
 	qCDebug(qalarm_klientHaupt)<<Meldung;
-	Stapel->setCurrentIndex(1);
+	Stapel->setCurrentIndex(Funktionsseite::Funktionsauswahl);
 
 }
 
@@ -232,12 +240,12 @@ void DlgHaupt::Beenden()
 
 void DlgHaupt::Wochenabfrage()
 {
-	Stapel->setCurrentIndex(3);
+	Stapel->setCurrentIndex(Funktionsseite::Wochenabfrageseite);
 }
 
 void DlgHaupt::Abmelden()
 {
 	K_Websocket->close();
 	sfAnmelden->setEnabled(true);
-	Stapel->setCurrentIndex(0);
+	Stapel->setCurrentIndex(Funktionsseite::Start);
 }

@@ -58,6 +58,8 @@ class DlgHaupt : public QMainWindow, private Ui::DlgHaupt
 		void				Abmelden();
 
 	private:
+		enum				Funktionsseite:int;
+		Q_ENUM(Funktionsseite)
 		Q_DISABLE_COPY(DlgHaupt)
 		QUrl				K_Endpunkt;
 		bool				K_Fehleingabe;
